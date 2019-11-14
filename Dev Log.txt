@@ -1,0 +1,108 @@
+==============================================================================================
+Project Sidewinder
+Development Blog
+==============================================================================================
+
+
+TO DO List (Pending)
+------------------
+[] Establish Scene Manager (currently using individual C# files to handle each scene transition, should be a better way)
+[] Find method to implement Laser attack
+[] Implement Options
+	[] Will need to add more Shots to the object pools (10 -> 40?)
+[] Implement other enemy spawn types
+
+
+---------------------------------------------------------------
+
+2019/11/15 (Fri)
+- 
+
+
+2019/11/14 (Thu)
+- Migration to full use of Text Mesh Pro for game UI and Canvas completed
+
+
+2019/11/11 (Mon)
+Fixed mock countdown's arcade pattern mesh renderer on Canvas.
+	- Need to confirm how mesh renderers behave in canvas.
+	
+
+2019/11/10 (Sun)
+- Experiment with creating particle system for use with weapons
+	- Combination of 2D sprites and 3D effects
+	- Cannot use detatch and destroy method due to reusage of bullets
+		- Resolved by creating separate pool for bullet effects
+			- Extended asset pool function by including effects object association
+				- Will be very useful when adding more attacks and enemy effects
+- Minor tweaks to effects animations
+- Font "Pixel7" added
+	- Not perfect monospace font. Need to find another.
+- Text Mesh Pro imported to project
+	- Migrating text objects to Text Mesh Pro
+	- Worth doing to maximize scalability
+	- Need to apply Canvas-based approach
+		- Setting Screen Space = Camera resolves all prior problems. Holy shit.
+- Switched to Canvas for text and other elements
+	- Currently only applied to Bootup scene so far. Need to migrate these in CGP.
+
+
+2019/11/09 (Sat)
+- Improved asset pool code to self-populate
+	- Replaces previous approach of adding manual population of objects (now can add more instances without needing to reapply each step)
+	- Much more convenient as this needs to be applied to other potential asset pools such as enemies, effects, other bullets, etc.
+- Added more asteroids to testing area
+- Improved thruster effects implementation
+	- Minimized lighting rendering by disabling unused objects in scenes
+- Speed Up power up effect added
+	- Including ring glow FX around player when used (to be applied for all power up usage)
+- Bug fixed with asteroid movement randomizer (movement along Z axis disabled)	
+- Scoring implemented
+- Mock arcade bootup menu added
+	- Learnt how to create patterns using this
+		- Might have some way to add mock scanlines as an option
+
+		
+2019/11/08 (Fri)
+- Bullet impact effect created
+	- Created asset pool for each bullet impact (separate as not always called such as when bullet leaves screen)
+	- Asset pool population very tedious especially when needing to add features as development goes on. Need a more automated approach if possible.
+
+	
+2019/11/07 (Thu)
+- Thruster effects added
+	- Uses 2D sprites
+
+	
+2019/11/06 (Wed)
+- Title Screen mockup created
+
+
+2019/11/05 (Tue)
+- Player tilt animation issue (using D-Pad) fixed using math-based approach
+	- Animator method considered, but want to minimize clutter to animation hierarchy for later
+	- Confirmed also works when using analog stick (e.g. DualShock gamepad)
+
+	
+2019/11/04 (Mon)
+- Power meter responses added upon powerup pick up
+- Power ups added
+- Asteroid prefab added
+- Asset pool implementation for shot firing successful
+- 
+
+
+2019/11/03 (Sun)
+- Revision of shmup tutorial & assets retrieved
+	- Also using previous Prot_Sidewinder and PARO projects for code and implementation reference
+		- Prot_Sidewinder not playable anymore due to deprecated control scheme from asset store
+- Basic controls implemented
+	- Tilt issue from Prototype still present when using D-Pad inputs. Needs a solution to it for smooth implementation.
+- Score & Layout UI added
+- Power Meter UI added
+
+
+2019/11/02 (Sat)
+- Basic foundation groundwork established for game
+- Mock-ups for features written on paper
+- Basic layout, empty scenes created
