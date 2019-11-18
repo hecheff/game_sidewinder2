@@ -8,10 +8,8 @@ public class PlayerHitbox_Damage : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-
-        // if(other.CompareTag("PowerUp")) {
-        //     playerController.powerMeterController.IncrementPowerMeter();
-        //     Destroy(other.gameObject);
-        // }
+        if(other.CompareTag("Enemy") || other.CompareTag("EnemyAttack") || other.CompareTag("Stage")) {
+            playerController.PlayerDie();
+        }
     }
 }

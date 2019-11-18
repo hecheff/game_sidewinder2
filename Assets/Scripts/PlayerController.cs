@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public PowerMeterController powerMeterController;
     public Animator     animator;
+    public GameObject   dieExplosion;
+
     public Boundary     boundary;           // Moveable range boundary (not to be confused with boundary limits for everything else)
     public Rigidbody    rigidbody;
     public Transform    shotSpawn;
@@ -35,7 +37,10 @@ public class PlayerController : MonoBehaviour
 
     private float nextFire;
 
+    private float speedUp_boost = 0;
+
     void Awake() {
+
     }
     // Start is called before the first frame update
     void Start()
@@ -49,8 +54,8 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("Boundary")) {
             // Do nothing
-        } 
-        
+        }
+
         /* 
         else {
             if(other.CompareTag("PowerUp")) {
@@ -94,8 +99,8 @@ public class PlayerController : MonoBehaviour
             // }
 
 
-            float moveHorizontal = Input.GetAxis("Horizontal") * moveSpeed;
-            float moveVertical = Input.GetAxis("Vertical") * moveSpeed;
+            float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + speedUp_boost);
+            float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + speedUp_boost);
 
             //if (CheckObjectWithinBoundary()) {
             // Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
@@ -240,7 +245,7 @@ public class PlayerController : MonoBehaviour
     void PowerUpFX_0_SpeedUp() {
         powerUpFX_0_speedUp_thruster.gameObject.SetActive(true);
         powerUpFX_0_speedUp_thruster.SetTrigger("RestartFX");
-        moveSpeed += 1.0f;
+        speedUp_boost += 1.0f;
     }
 
     void Respawn() {
@@ -276,6 +281,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // If player is destroyed by enemy attack, or enemy/stage collision
+    public void PlayerDie() {        
+        // Play explosion
+        Instantiate(dieExplosion, transform.position, transform.rotation);
+
+        // [WIP] If player still has lives, proceed with respawn sequence
+
+        // Set respawn sequence
+        animator.SetBool("Player_Respawn", true);   // Set respawn flag in animator to 'true' to allow respawn invincibility sequence upon reentry.
+        animator.SetTrigger("Player_WasKilled");    // 
+        
+        // Reset player power ups
+        PlayerPowerReset();
+
+        // [WIP] Nullify all enemy attacks for brief amount of time (2-3 seconds after respawn)
+        
+    }
+
+    // Reset player active power ups
+    // Throw any Options forward from player's death spot
+    public void PlayerPowerReset() {
+        speedUp_boost = 0;
+    }
 
     // ======================================= DEPRECATED ITEMS =======================================
 

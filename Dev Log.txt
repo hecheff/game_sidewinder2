@@ -15,9 +15,34 @@ TO DO List (Pending)
 
 ---------------------------------------------------------------
 
+2019/11/18 (Mon)
+- Death explosion fixed.
+- Test stage environment colliders and tags fixed.
+- Minor changes to 3D Models
+	- Likely have to work on new ones when designs finalized anyway.
+	- May as well get in some practice.
+- 
+
+
+2019/11/17 (Sun)
+- Now using Perspective View for all objects, with 2D enemies and effects rendered using separate camera.
+	- Need to reorganize and only keep necessary cameras and depths of each object and effect.
+- Player attack pool extended from 10 to 15.
+- 3D stage implements using colliders per object instead of mesh collider. Can consider method of building stages using individual objects.
+	- Mesh collider too resource-heavy, and problems with detecting objects inside.
+- Vic Viper model recolored slightly with black highlights in various parts like vents.
+- Player death & respawn implemented (with invincibility period of 3 seconds)
+	- Not tied to lives system yet.
+	- Need to fix particle animation for player death
+
+
+2019/11/16 (Sat)
+- Attempt at creating 3D perspective layout for stage, but lack of clipping between objects and stage.
+	- Looking up method to render stage as perspective while keeping all objects orthographic.
+
+
 2019/11/15 (Fri)
 - Backup/Versioning created on GitHub for project.
-- 
 
 
 2019/11/14 (Thu)

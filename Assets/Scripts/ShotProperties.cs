@@ -38,6 +38,22 @@ public class ShotProperties : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other) {
+        // If bullet is within enemy or terrain
+        if(other.bounds.Contains(this.transform.position)) {
+            if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+                PlaceShotHitFX();
+                ReturnToShotPool();
+            }
+        }
+        
+        
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+            PlaceShotHitFX();
+            ReturnToShotPool();
+        }
+    }
+
     // If the bullet leaves boundary, disable and return to ShotPool
     void ReturnToShotPool() {
         gameObject.transform.position = shotPool_location.position;     // Send shot object back to where shot pool is located
