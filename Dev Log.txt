@@ -15,13 +15,25 @@ TO DO List (Pending)
 
 ---------------------------------------------------------------
 
+
+
+
+2019/11/19 (Tue)
+- Using "limited bullets" to incentivize close-up risky play via increased effective DPS (like old shmups)
+	- Player attack pool reduced from 15 to 5.
+	- Player bullet speed reduced by 10%.
+	- Player rate of fire doubled.
+
+- Foundation established for laser prototype.
+	- Enemy hit registration has been changed to OnTriggerStay instead of OnTriggerEnter
+	
+
 2019/11/18 (Mon)
 - Death explosion fixed.
 - Test stage environment colliders and tags fixed.
 - Minor changes to 3D Models
 	- Likely have to work on new ones when designs finalized anyway.
 	- May as well get in some practice.
-- 
 
 
 2019/11/17 (Sun)

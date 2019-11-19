@@ -193,9 +193,11 @@ public class PlayerController : MonoBehaviour
             // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
             if (Input.GetButton("Fire1") && Time.time > nextFire)
             {
+                /*
                 nextFire = Time.time + rateOfFire;
                 Debug.Log("Fire1 pressed");
                 FireShotFromShotPool();
+                */
             }
 
             // Powerup Controls
@@ -279,6 +281,11 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    // Fire laser
+    void FireLaser() {
+        // Control Line Renderer
     }
 
     // If player is destroyed by enemy attack, or enemy/stage collision

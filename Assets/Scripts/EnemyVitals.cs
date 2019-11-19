@@ -16,7 +16,17 @@ public class EnemyVitals : MonoBehaviour
         currHP = maxHP;     // Initialize current HP to be same as max
     }
     
+    /*
     void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("PlayerAttack")) {
+            GameController.Instance.AnnotateScore(score_hit);
+            currHP--;
+        }
+    }
+    */
+
+    void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
