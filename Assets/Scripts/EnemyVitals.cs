@@ -5,6 +5,11 @@ using UnityEngine;
 public class EnemyVitals : MonoBehaviour
 {
     public GameObject explosion;
+    public MeshRenderer meshRenderer;
+    public Color32 flashColor_damage = new Color32(255,255,255,255);
+    public float flashTime = 0.05f;
+    private Color32 originalColor;
+    private Material originalMaterial;
 
     public int maxHP = 1;   // Maximum HP
     public int currHP;      // Current HP (same as maxHP when initialized in-game)
@@ -14,39 +19,51 @@ public class EnemyVitals : MonoBehaviour
 
     void Awake() {
         currHP = maxHP;     // Initialize current HP to be same as max
+        if(meshRenderer) {
+           originalMaterial = meshRenderer.material;
+           originalColor    = meshRenderer.material.color;
+        }
     }
     
-    /*
-    void OnTriggerEnter(Collider other)
-    {
+    
+    void OnTriggerEnter(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
             currHP--;
+            TakeDamage();
         }
     }
-    */
+    
 
-    void OnTriggerStay(Collider other)
-    {
+    void OnTriggerStay(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
             currHP--;
+            TakeDamage();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        // When enemy HP is 0, set destroy target
         if(currHP == 0) {
             Instantiate(explosion, transform.position, transform.rotation);
             GameController.Instance.AnnotateScore(score_destroy);
             Destroy(gameObject);
         }
+    }
+
+    void TakeDamage() {
+        if(meshRenderer) {
+            meshRenderer.material = null;
+            meshRenderer.material.color = flashColor_damage;
+            Invoke("ResetColor", flashTime);
+        }
+    }
+
+    void ResetColor() {
+        meshRenderer.material       = originalMaterial;
+        meshRenderer.material.color = originalColor;
     }
 }

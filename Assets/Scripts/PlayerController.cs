@@ -80,15 +80,68 @@ public class PlayerController : MonoBehaviour
         */
     }
 
-    void OnTriggerExit(Collider other)
-    {
+    void OnTriggerExit(Collider other) {
         if(other.CompareTag("Boundary")) {
             // Do nothing
         }
     }
 
-    // private bool playerMotion_up = false;
-    // private bool playerMotion_down = false;
+    
+    void Update() {
+        if(canControl) {
+            // Attack Controls
+            // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
+            if (Input.GetButton("Fire1") && Time.time > nextFire) {
+                
+                nextFire = Time.time + rateOfFire;
+                Debug.Log("Fire1 pressed");
+                FireShotFromShotPool();
+                
+            }
+
+            // Powerup Controls
+            if(Input.GetButton("Fire2")) {
+                Debug.Log("Fire2 pressed. Power Meter = " + powerMeterController.currentLitMeter);
+                switch(powerMeterController.currentLitMeter) {
+                    case 0:         // Speed Up
+                        PowerUpFX_0_SpeedUp();
+                        break;
+                        
+                    case 1:         // Missile
+                        break;
+                        
+                    case 2:         // Laser
+                        break;
+                        
+                    case 3:         // Charge
+                        break;
+                        
+                    case 4:         // Option
+                        break;
+                        
+                    case 5:         // Shield
+                        break;
+                    
+                    default:        // Do nothing
+                    case -1:        
+                        break;
+                }
+
+                // Reset power meter if power up used (when button pressed when not empty)
+                if(powerMeterController.currentLitMeter != -1) {
+                    powerUpFX_RippleFX.gameObject.SetActive(true);
+                    powerUpFX_RippleFX.SetTrigger("RestartFX");
+                    powerMeterController.ResetMeter();
+                }
+            }
+        }
+        
+        if(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Player_SpawnIn") {
+            animator.applyRootMotion = true;
+        } else {
+            animator.applyRootMotion = false;
+        }
+    }
 
     void FixedUpdate()
     {
@@ -183,65 +236,6 @@ public class PlayerController : MonoBehaviour
         //  - Tilt becomes instant when using gamepad due to lack of acceleration
         //rigidbody.rotation = Quaternion.Euler(rigidbody.velocity.y * 4.5f, 0.0f, 0.0f)
         //Debug.Log(rigidbody.velocity.y * tiltLimit);
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        if(canControl) {
-            // Attack Controls
-            // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
-            if (Input.GetButton("Fire1") && Time.time > nextFire)
-            {
-                /*
-                nextFire = Time.time + rateOfFire;
-                Debug.Log("Fire1 pressed");
-                FireShotFromShotPool();
-                */
-            }
-
-            // Powerup Controls
-            if(Input.GetButton("Fire2")) {
-                Debug.Log("Fire2 pressed. Power Meter = " + powerMeterController.currentLitMeter);
-                switch(powerMeterController.currentLitMeter) {
-                    case 0:         // Speed Up
-                        PowerUpFX_0_SpeedUp();
-                        break;
-                        
-                    case 1:         // Missile
-                        break;
-                        
-                    case 2:         // Laser
-                        break;
-                        
-                    case 3:         // Charge
-                        break;
-                        
-                    case 4:         // Option
-                        break;
-                        
-                    case 5:         // Shield
-                        break;
-                    
-                    default:        // Do nothing
-                    case -1:        
-                        break;
-                }
-
-                // Reset power meter if power up used (when button pressed when not empty)
-                if(powerMeterController.currentLitMeter != -1) {
-                    powerUpFX_RippleFX.gameObject.SetActive(true);
-                    powerUpFX_RippleFX.SetTrigger("RestartFX");
-                    powerMeterController.ResetMeter();
-                }
-            }
-        }
-        
-        if(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Player_SpawnIn") {
-            animator.applyRootMotion = true;
-        } else {
-            animator.applyRootMotion = false;
-        }
     }
 
     void PowerUpFX_0_SpeedUp() {

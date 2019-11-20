@@ -15,7 +15,14 @@ TO DO List (Pending)
 
 ---------------------------------------------------------------
 
+2019/11/21 (Thu)
+- 
 
+
+2019/11/20 (Wed)
+- Added enemy flash effect when taking damage
+- Fixed enemy collider handler (needs both Enter and Stay to handle different attack types)
+- Re-enabled normal attacks in the meantime when testing other parts of game
 
 
 2019/11/19 (Tue)

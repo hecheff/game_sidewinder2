@@ -27,6 +27,7 @@ public class GlobalController : MonoBehaviour
         //savePath = Application.persistentDataPath + "/" + "gameData.json";
 
         Application.targetFrameRate = targetFrameRate;  // Set target frame rate of game (ideal: 60fps)
+        Time.captureDeltaTime       = 1.0f/targetFrameRate;
 
         // Set GlobalController as Instance
         if (Instance == null) {
