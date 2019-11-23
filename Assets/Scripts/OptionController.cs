@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class OptionController : MonoBehaviour
 {
-    public Transform    optionPivot;
-    public Vector3      positionFromPivot;
+    public Transform        optionPivot;
+    public Vector3          positionFromPivot;
+    public AttackController attackController;
     
-    public Transform    shotSpawn;
-    public ObjectPool   shotPool_shots;
+    public Transform        shotSpawn;
+    public ObjectPool       shotPool_shots;
 
     public bool followPlayer;
 
@@ -18,7 +19,8 @@ public class OptionController : MonoBehaviour
             transform.position = optionPivot.position + positionFromPivot;
         }
     }
-
+    
+    /*
     public void FireWeapon() {
         GameObject currentShot;
         GameObject currentShotEffect;
@@ -46,4 +48,5 @@ public class OptionController : MonoBehaviour
             }
         }
     }
+    */
 }

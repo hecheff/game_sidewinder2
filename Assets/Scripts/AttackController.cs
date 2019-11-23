@@ -50,4 +50,10 @@ public class AttackController : MonoBehaviour {
                 break;
         }
     }
+    
+    // Resets animation sequence of laser.
+    // Currently triggered upon player death.
+    public void ResetLaser() {
+        laserController.ResetLaser();
+    }
 }

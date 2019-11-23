@@ -12,6 +12,7 @@ TO DO List (Pending)
 	[] Will need to add more Shots to the object pools (10 -> 40?)
 [] Implement other enemy spawn types
 
+[] Add visual effects to laser
 
 Laser Implement:
 	- Y axis always relative to player character
@@ -20,11 +21,28 @@ Laser Implement:
 
 ---------------------------------------------------------------
 
+
+2019/11/24 (Sun)
+[] Fix Attack Drone functions
+	[] Spawn based on power up status
+	[] Formation system: Follow
+	[] Action when player dies (throws itself in front, move to scrolling screen, etc.)
+	[] Player can pick them back up after respawning
+
 2019/11/23 (Sat)
 - Fixed enemy HP bug (HP == 0 changed to HP <= 0) as failsafe against multiple damage sources
 - Attack drone (Options) implemented with new Blender model
+	- Basic shot added
+	- Laser shot added
+	- Not implemented yet: 
+		- Attack Drone spawn based on power up status
+		- Formation systems (start with basic follow pattern)
+		- Needs an action when player dies, and method for player to pick them back up
+		- 
 - Adjusted light intensity of player attack (5 to 1)
-- 
+- Laser effect bug during player death while firing fixed
+- Missile model created 
+	- Need to develop physics behind it
 
 
 2019/11/22 (Fri)

@@ -83,6 +83,10 @@ public class LaserController : MonoBehaviour
         animator.SetTrigger("AttackStart");
     }
 
+    public void ResetLaser() {
+        animator.SetTrigger("PlayerDie");
+    }
+
     // Set animation of shot hit effect
     void PlaceShotHitFX() {
         for(int i = 0; i < shotHitPool.objects.Count; i++) {

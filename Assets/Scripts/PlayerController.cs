@@ -101,25 +101,19 @@ public class PlayerController : MonoBehaviour
                         attackController.FireWeapon(0);
                         nextFire = Time.time + rateOfFire;
 
-                        /*
+                        // Fire attacks from Options
                         for(int i = 0; i < optionCount; i++) {
-                            options[i].FireWeapon();
+                            options[i].attackController.FireWeapon(0);
                         }
-                        */
                     }
                 } else {
                     if(!attackController.laserController.attack_isFiring) {
                         attackController.FireWeapon(1);
                         
-                        
-                        //laserController.gameObject.SetActive(true);
-                        //laserController.FireLaser();
-
-                        /*
+                        // Fire attacks from Options
                         for(int i = 0; i < optionCount; i++) {
-                            options[i].FireWeapon();
+                            options[i].attackController.FireWeapon(1);
                         }
-                        */
                     }
                 }
             }
@@ -203,8 +197,7 @@ public class PlayerController : MonoBehaviour
     // }
 
     // Force object to stay within set boundaries
-    void SetObjectBoundary()
-    {
+    void SetObjectBoundary() {
         rigidbody.position = new Vector3
         (
             Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
@@ -218,8 +211,7 @@ public class PlayerController : MonoBehaviour
     private float   tiltCurrent         = 0.0f;     // Current amount of tilt
     private float   tiltResetMultiplier = 4.0f;     // Tilt speed multiplier when resetting to 0
 
-    void MovementTilt()
-    {
+    void MovementTilt() {
         // Update value of tilt based on current vertical input (speed of movement also determined by player max. speed)
         // Check if vertical movement present
         if(Input.GetAxisRaw("Vertical") == 1) {
@@ -269,8 +261,10 @@ public class PlayerController : MonoBehaviour
         speedUp_boost += 1.0f;
     }
 
-    // If player is destroyed by enemy attack, or enemy/stage collision
-    public void PlayerDie() {        
+    // If player is destroyed by enemy attack or enemy/stage collision
+    public void PlayerDie() {
+        canControl = false;
+
         // Play explosion
         Instantiate(dieExplosion, transform.position, transform.rotation);
 
@@ -280,6 +274,16 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Player_Respawn", true);   // Set respawn flag in animator to 'true' to allow respawn invincibility sequence upon reentry.
         animator.SetTrigger("Player_WasKilled");    // 
         
+        // Cancel laser attack animation sequence
+        if(attack_isLaser) {
+            attackController.ResetLaser();
+
+            // Cancel for each active Option
+            for(int i = 0; i < optionCount; i++) {
+                options[i].attackController.ResetLaser();
+            }
+        }
+
         // Reset player power ups
         PlayerPowerReset();
 
@@ -292,7 +296,9 @@ public class PlayerController : MonoBehaviour
     public void PlayerPowerReset() {
         speedUp_boost = 0;                          // Speed boost to 0
         attack_isLaser = false;                     // Laser attack status to false (revert to default attack)
-        powerMeterController.ResetMeter_Die();      // 
+        powerMeterController.ResetMeter_Die();      // Reset power meter (as applicable)
+        
+        //optionCount = 0;                          // Reset Option count
     }
 
 
