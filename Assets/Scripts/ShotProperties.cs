@@ -32,7 +32,7 @@ public class ShotProperties : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         // If bullet collides with enemy or terrain
-        if(other.CompareTag("Enemy")) {
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
             PlaceShotHitFX();
             ReturnToShotPool();
         }
@@ -40,18 +40,18 @@ public class ShotProperties : MonoBehaviour
 
     void OnTriggerStay(Collider other) {
         // If bullet is within enemy or terrain
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+            PlaceShotHitFX();
+            ReturnToShotPool();
+        }
+        
+        /*
         if(other.bounds.Contains(this.transform.position)) {
             if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
                 PlaceShotHitFX();
                 ReturnToShotPool();
             }
-        }
-        
-        
-        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            PlaceShotHitFX();
-            ReturnToShotPool();
-        }
+        }*/
     }
 
     // If the bullet leaves boundary, disable and return to ShotPool

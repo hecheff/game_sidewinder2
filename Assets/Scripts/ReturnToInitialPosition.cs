@@ -9,10 +9,9 @@ public class ReturnToInitialPosition : MonoBehaviour
     public bool disableOnResetOverride  = false;    // If true, set gameObject to inactive after resetting position
 
     public bool resetPositionFlag       = false;    // Flag to check if position is ready to be reset
-    private Vector3 initialPosition;
+    public Vector3 initialPosition;                 // Set this to public for debugging
     
-    void Awake()
-    {
+    void Awake() {
         initialPosition = gameObject.transform.position;
     }
 

@@ -22,7 +22,7 @@ public class FXController : MonoBehaviour
             gameObject.transform.position = effectPivot.transform.position + annotateZLayer;
         }
     }
-
+    
     public void PlayFX() {
         animator.SetTrigger("RestartFX");
     }

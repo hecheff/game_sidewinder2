@@ -13,11 +13,30 @@ TO DO List (Pending)
 [] Implement other enemy spawn types
 
 
+Laser Implement:
+	- Y axis always relative to player character
+	- 
+
+
 ---------------------------------------------------------------
 
-2019/11/21 (Thu)
+2019/11/23 (Sat)
+- Fixed enemy HP bug (HP == 0 changed to HP <= 0) as failsafe against multiple damage sources
+- Attack drone (Options) implemented with new Blender model
+- Adjusted light intensity of player attack (5 to 1)
 - 
 
+
+2019/11/22 (Fri)
+- Time off (spent experimenting with Blender)
+
+
+2019/11/21 (Thu)
+- Upgraded to Unity 2019.2.13f1 (latest build at time)
+- Laser attack added
+	- Does not stop when hitting solid objects like walls or enemies with high HP
+	- Need to apply impact effect properly
+	- Big issue: Does not detect impact with walls for some reason. Need to research collider issue about this.
 
 2019/11/20 (Wed)
 - Added enemy flash effect when taking damage

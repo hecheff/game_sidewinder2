@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool canControl = true;  // Determine if player can control ship
 
     public PowerMeterController powerMeterController;
+    public AttackController attackController;
+    public LaserController laserController;
+
     public Animator     animator;
     public GameObject   dieExplosion;
 
@@ -25,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public Animator     powerUpFX_RippleFX;
     public Animator     powerUpFX_0_speedUp_thruster;
+
+    public OptionController[] options;
 
     // Returns response upon relevant hitbox interacted with
     public PlayerHitbox_PowerUp     collider_powerUp;       // Response to collecting power-up on contact. Hitbox spans dimensions of visible ship.
@@ -37,21 +42,19 @@ public class PlayerController : MonoBehaviour
 
     private float nextFire;
 
-    private float speedUp_boost = 0;
+    // Player temp stats
+    private bool    attack_isLaser  = false;
+    private float   speedUp_boost   = 0;
+    private int     optionCount     = 2;
 
-    void Awake() {
+    void Awake() { }
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         //camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //anim = GetComponent<Animator>();
-
     }
 
-    void OnTriggerEnter(Collider other)
-    {
+    void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Boundary")) {
             // Do nothing
         }
@@ -91,12 +94,34 @@ public class PlayerController : MonoBehaviour
         if(canControl) {
             // Attack Controls
             // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
-            if (Input.GetButton("Fire1") && Time.time > nextFire) {
-                
-                nextFire = Time.time + rateOfFire;
-                Debug.Log("Fire1 pressed");
-                FireShotFromShotPool();
-                
+            if (Input.GetButton("Fire1")) {
+                if(!attack_isLaser) {
+                    if(Time.time > nextFire) {
+                        Debug.Log("Fire1 pressed");
+                        attackController.FireWeapon(0);
+                        nextFire = Time.time + rateOfFire;
+
+                        /*
+                        for(int i = 0; i < optionCount; i++) {
+                            options[i].FireWeapon();
+                        }
+                        */
+                    }
+                } else {
+                    if(!attackController.laserController.attack_isFiring) {
+                        attackController.FireWeapon(1);
+                        
+                        
+                        //laserController.gameObject.SetActive(true);
+                        //laserController.FireLaser();
+
+                        /*
+                        for(int i = 0; i < optionCount; i++) {
+                            options[i].FireWeapon();
+                        }
+                        */
+                    }
+                }
             }
 
             // Powerup Controls
@@ -111,6 +136,7 @@ public class PlayerController : MonoBehaviour
                         break;
                         
                     case 2:         // Laser
+                        attack_isLaser = true;
                         break;
                         
                     case 3:         // Charge
@@ -143,8 +169,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if(canControl) {
             // Fix set acceleration regardless of input source (keyboard or gamepad)
             // if(Input.GetAxis("Horizontal") == 0) {
@@ -244,11 +269,40 @@ public class PlayerController : MonoBehaviour
         speedUp_boost += 1.0f;
     }
 
-    void Respawn() {
+    // If player is destroyed by enemy attack, or enemy/stage collision
+    public void PlayerDie() {        
+        // Play explosion
+        Instantiate(dieExplosion, transform.position, transform.rotation);
+
+        // [WIP] If player still has lives, proceed with respawn sequence
+
+        // Set respawn sequence
+        animator.SetBool("Player_Respawn", true);   // Set respawn flag in animator to 'true' to allow respawn invincibility sequence upon reentry.
+        animator.SetTrigger("Player_WasKilled");    // 
+        
+        // Reset player power ups
+        PlayerPowerReset();
+
+        // [WIP] Nullify all enemy attacks for brief amount of time (2-3 seconds after respawn)
         
     }
 
-    // Fire shot
+    // Reset player active power ups
+    // Throw any Options forward from player's death spot
+    public void PlayerPowerReset() {
+        speedUp_boost = 0;                          // Speed boost to 0
+        attack_isLaser = false;                     // Laser attack status to false (revert to default attack)
+        powerMeterController.ResetMeter_Die();      // 
+    }
+
+
+
+
+    // ======================================= DEPRECATED ITEMS =======================================
+
+    // [DEPRECATED] Shot system now part of AttackController (allows sharing of code for Options)
+    // Fire basic attack shot
+    /*
     void FireShotFromShotPool() {
         GameObject currentShot;
         GameObject currentShotEffect;
@@ -276,40 +330,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    */
 
-    // Fire laser
-    void FireLaser() {
-        // Control Line Renderer
-    }
-
-    // If player is destroyed by enemy attack, or enemy/stage collision
-    public void PlayerDie() {        
-        // Play explosion
-        Instantiate(dieExplosion, transform.position, transform.rotation);
-
-        // [WIP] If player still has lives, proceed with respawn sequence
-
-        // Set respawn sequence
-        animator.SetBool("Player_Respawn", true);   // Set respawn flag in animator to 'true' to allow respawn invincibility sequence upon reentry.
-        animator.SetTrigger("Player_WasKilled");    // 
-        
-        // Reset player power ups
-        PlayerPowerReset();
-
-        // [WIP] Nullify all enemy attacks for brief amount of time (2-3 seconds after respawn)
-        
-    }
-
-    // Reset player active power ups
-    // Throw any Options forward from player's death spot
-    public void PlayerPowerReset() {
-        speedUp_boost = 0;
-    }
-
-    // ======================================= DEPRECATED ITEMS =======================================
-
-
-    // [DEPRECATED] Cannot be applied due to 
+    // [DEPRECATED] Cannot be applied due to difference in input value handling by input device (keyboard, gamepad, analog, etc.)
     // Set tilt action applied to object during vertical movement
     /* 
     void MovementTilt()

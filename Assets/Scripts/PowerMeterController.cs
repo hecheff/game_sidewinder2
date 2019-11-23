@@ -49,9 +49,17 @@ public class PowerMeterController : MonoBehaviour
         UpdatePowerMeterLight();
     }
 
+    //
     public void ResetMeter() {
         currentLitMeter = -1;
         UpdatePowerMeterLight();
+    }
+
+    // 
+    public void ResetMeter_Die() {
+        if(currentLitMeter > -1) {
+            currentLitMeter = 0;
+        }
     }
 
     // Update power meter light status according to currentLitMeter

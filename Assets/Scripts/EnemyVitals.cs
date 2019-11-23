@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyVitals : MonoBehaviour
-{
+public class EnemyVitals : MonoBehaviour {
     public GameObject explosion;
     public MeshRenderer meshRenderer;
     public Color32 flashColor_damage = new Color32(255,255,255,255);
@@ -44,10 +43,9 @@ public class EnemyVitals : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // When enemy HP is 0, set destroy target
-        if(currHP == 0) {
+    void Update() {
+        // When enemy HP is 0 or below, set destroy target
+        if(currHP <= 0) {
             Instantiate(explosion, transform.position, transform.rotation);
             GameController.Instance.AnnotateScore(score_destroy);
             Destroy(gameObject);
