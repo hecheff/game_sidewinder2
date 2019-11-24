@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotProperties : MonoBehaviour
-{
+public class ShotProperties : MonoBehaviour {
     public Rigidbody rigidBody;             // Rigidbody for current shot fired
     public float shotSpeed = 20.0f;         // Flight speed of shot
     //public ParticleSystem shotParticles;
@@ -18,8 +17,7 @@ public class ShotProperties : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         rigidBody.velocity = new Vector3(shotSpeed, 0.0f, 0.0f);
     }
 

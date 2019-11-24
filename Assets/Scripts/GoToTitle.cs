@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GoToTitle : MonoBehaviour
-{
-    
+
+public class GoToTitle : MonoBehaviour {
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         SceneManager.LoadScene("01 Title");
     }
 }

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameController : MonoBehaviour
-{
+public class GameController : MonoBehaviour {
     // Establishing instance of GameController makes it accessible everywhere else.
         public static GameController Instance;
 
@@ -12,8 +11,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI txt_currentScore;
 
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         // Set GameController as Instance
         if (Instance == null) {
 			DontDestroyOnLoad (gameObject);
@@ -26,8 +24,7 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 

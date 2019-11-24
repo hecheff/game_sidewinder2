@@ -23,12 +23,25 @@ Laser Implement:
 
 
 2019/11/24 (Sun)
+- Put all attack collections into prefab for easy extensibility
+- Fixed laser algorithm for stipping when hitting enemy object
+	- Still need to fix collision detection approach
+	- Attack does not continue going forward when enemy destroyed using attack (when collider vanishes)
+- Tightend code to remove unused variables
+- Particle system added to laser attack
+	- May need visual tweaks later
+	
+
+[] Add Debug Menu?
+[] Implement touchscreen input method?
+
 [] Fix Attack Drone functions
 	[] Spawn based on power up status
 	[] Formation system: Follow
 	[] Action when player dies (throws itself in front, move to scrolling screen, etc.)
 	[] Player can pick them back up after respawning
 
+	
 2019/11/23 (Sat)
 - Fixed enemy HP bug (HP == 0 changed to HP <= 0) as failsafe against multiple damage sources
 - Attack drone (Options) implemented with new Blender model

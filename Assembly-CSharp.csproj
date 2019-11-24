@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\GlobalController.cs" />
      <Compile Include="Assets\Scripts\GoToTitle.cs" />
      <Compile Include="Assets\Scripts\LaserController.cs" />
+     <Compile Include="Assets\Scripts\LaserParticleController.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\OptionController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

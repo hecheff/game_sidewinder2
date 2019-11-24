@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateObject : MonoBehaviour
-{
+public class RotateObject : MonoBehaviour {
     public string axis;
 	public float angle_per_second;
 

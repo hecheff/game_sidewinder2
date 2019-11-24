@@ -4,8 +4,7 @@ using UnityEngine;
 
 // This is a recurring script which is run for all objects and effects which are to return to their initially set position after their animation cycle has been completed
 // Examples include bullet hit effects (return to their bullet origin) 
-public class ReturnToInitialPosition : MonoBehaviour
-{
+public class ReturnToInitialPosition : MonoBehaviour {
     public bool disableOnResetOverride  = false;    // If true, set gameObject to inactive after resetting position
 
     public bool resetPositionFlag       = false;    // Flag to check if position is ready to be reset

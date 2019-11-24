@@ -9,8 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
 public enum Language { English = 0, Japanese = 1 };
-public class GlobalController : MonoBehaviour
-{
+public class GlobalController : MonoBehaviour {
     // Establishing instance of GlobalController makes it accessible everywhere else.
     public static GlobalController Instance;
 
@@ -21,8 +20,7 @@ public class GlobalController : MonoBehaviour
     public int targetFrameRate = 60;
 
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         Screen.SetResolution(1080,1920,true);
         //savePath = Application.persistentDataPath + "/" + "gameData.json";
 
@@ -37,8 +35,7 @@ public class GlobalController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 }

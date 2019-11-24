@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionController : MonoBehaviour
-{
+public class OptionController : MonoBehaviour {
     public Transform        optionPivot;
     public Vector3          positionFromPivot;
     public AttackController attackController;

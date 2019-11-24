@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class SceneController_Bootup : MonoBehaviour
-{
+public class SceneController_Bootup : MonoBehaviour {
     public GameObject initialSequence;
     public GameObject lastSequence;
     
@@ -16,8 +15,7 @@ public class SceneController_Bootup : MonoBehaviour
     private int countVal = 15;
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if(!countdownOver) {
             if(countup >= GlobalController.Instance.targetFrameRate) {
                 if(countVal != 0) {

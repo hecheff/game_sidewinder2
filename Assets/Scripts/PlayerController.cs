@@ -4,14 +4,12 @@ using UnityEngine;
 
 // Establish player movement boundary on-screen
 [System.Serializable]
-public class Boundary
-{
+public class Boundary {
     public float xMin, xMax, yMin, yMax;
 }
 
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     public bool canControl = true;  // Determine if player can control ship
 
     public PowerMeterController powerMeterController;
@@ -49,10 +47,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake() { }
 
-    void Start() {
-        //camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        //anim = GetComponent<Animator>();
-    }
+    void Start() { }
 
     void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Boundary")) {
@@ -107,6 +102,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 } else {
+                    // Check if laser is currently in-use
                     if(!attackController.laserController.attack_isFiring) {
                         attackController.FireWeapon(1);
                         
@@ -165,20 +161,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() {
         if(canControl) {
-            // Fix set acceleration regardless of input source (keyboard or gamepad)
-            // if(Input.GetAxis("Horizontal") == 0) {
-
-            // }
-
-
             float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + speedUp_boost);
             float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + speedUp_boost);
-
-            //if (CheckObjectWithinBoundary()) {
-            // Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-            // rigidBody.velocity = movement;
-            //}
-
+            
             Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
             rigidbody.velocity = movement;
 
@@ -341,8 +326,7 @@ public class PlayerController : MonoBehaviour
     // [DEPRECATED] Cannot be applied due to difference in input value handling by input device (keyboard, gamepad, analog, etc.)
     // Set tilt action applied to object during vertical movement
     /* 
-    void MovementTilt()
-    {
+    void MovementTilt() {
         rigidbody.rotation = Quaternion.Euler(rigidbody.velocity.y * tilt, 0.0f, 0.0f); // Set tilt
     }
     */

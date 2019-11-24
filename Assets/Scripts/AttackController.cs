@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackController : MonoBehaviour {
-
     public Transform    shotOrigin;
     public ObjectPool   shotPool_shots;
     

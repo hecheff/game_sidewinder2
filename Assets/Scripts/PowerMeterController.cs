@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PowerMeterController : MonoBehaviour
-{
+public class PowerMeterController : MonoBehaviour {
     public Sprite meterTexture_inactive;
     public Sprite meterTexture_active;
 
@@ -49,13 +48,15 @@ public class PowerMeterController : MonoBehaviour
         UpdatePowerMeterLight();
     }
 
-    //
+    // Reset power meter when power up used by player
     public void ResetMeter() {
         currentLitMeter = -1;
         UpdatePowerMeterLight();
     }
 
-    // 
+    // Reset power meter when player dies
+    // If at least one power meter is lit, reset to beginning
+    // Otherwise, reset to nothing (-1)
     public void ResetMeter_Die() {
         if(currentLitMeter > -1) {
             currentLitMeter = 0;

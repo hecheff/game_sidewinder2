@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FXController : MonoBehaviour
-{
+public class FXController : MonoBehaviour {
     public Transform effectPivot;
     public Animator animator;
     public bool followPlayer = true;
@@ -16,8 +15,7 @@ public class FXController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if(followPlayer) {
             gameObject.transform.position = effectPivot.transform.position + annotateZLayer;
         }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 // Note: This SoundManager is only intended for BGMs and SFXs which are universal across the entire game and are meant to be played without potential overlap.
 // Therefore, any in-game sound effects such as shots or explosions need to be handled by their respective game objects.
-public class SoundManager : MonoBehaviour
-{
+public class SoundManager : MonoBehaviour {
     public static SoundManager Instance;
 
 	// Audio source (players)
@@ -37,8 +36,7 @@ public class SoundManager : MonoBehaviour
 	// 	audioSource.Play();
 	// }
 
-	void Awake()
-    {
+	void Awake() {
         // Set SoundManager as Instance
         if (Instance == null) {
 			DontDestroyOnLoad (gameObject);
