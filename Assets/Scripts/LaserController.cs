@@ -30,6 +30,9 @@ public class LaserController : MonoBehaviour {
     public bool attack_isFiring = false;        // When laser is being fired (disabled when in standby)
     public bool laser_isExtend  = true;         // When laser is currently being extended
 
+    // Raycasting experiment to replace previous collider approach
+    //private Ray ray;
+    //private RaycastHit hitInfo;
 
     void Awake() {
         shotHitPool = GameObject.Find("PlayerShotHit_Pool").GetComponent<ObjectPool>();
@@ -51,18 +54,41 @@ public class LaserController : MonoBehaviour {
         SetLaserEmitter();
     }
 
+    void Update() { }
+
     void FixedUpdate() {
         // Actions to perform while attack is being fired (no action taken when attack)
         if(attack_isFiring) {
             CalculateReferenceValues();
             transform.position = laserPivot.position;
-
+            
             // Update laser length when not hitting any enemies
             // INCOMPLETE: Needs detection fix for when enemy collider vanishes when still active
+            /*
+            if(Physics.Raycast(ray, out hitInfo, spriteRenderer.size.x)) {
+                if(hitInfo.transform.gameObject.tag == "Enemy" || hitInfo.transform.gameObject.tag == "Stage") {
+                    spriteRenderer.size = new Vector2(laserPivot.position.x + hitInfo.point.x, spriteRenderer.size.y);
+                    
+                    //laser_isExtend = false;
+                    
+                    Debug.DrawLine(laserPivot.position, laserPivot.position + new Vector3(spriteRenderer.size.x,0,0), Color.green);
+                } else {
+                    //
+                    //laser_isExtend = true;
+                    spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
+                    Debug.DrawLine(laserPivot.position, laserPivot.position + new Vector3(spriteRenderer.size.x,0,0), Color.red);
+
+                    
+
+                    // Set particle emitter to travel on tip of beam
+                    SetLaserEmitter();
+                }
+            }
+            */
+
             if(laser_isExtend) {
                 spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
             }
-
             // Adjust capsule collider according to length (height) of laser
             capsuleCollider.center = laserCenter;
             capsuleCollider.height = spriteRenderer.size.x - centerDifference*2;
@@ -75,15 +101,8 @@ public class LaserController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         // If bullet collides with enemy or terrain
         if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            PlaceShotHitFX();
-            laser_isExtend = false;
-        }
-    }
-
-    void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            PlaceShotHitFX();
-            laser_isExtend = true;
+            //PlaceShotHitFX();
+            //laser_isExtend = false;
         }
     }
 
@@ -94,13 +113,51 @@ public class LaserController : MonoBehaviour {
             //laser_isExtend = false;
         }
     }
+
+    void OnTriggerExit(Collider other) {
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+            //PlaceShotHitFX();
+            //laser_isExtend = true;
+        }
+    }
+    
+
+    /*
+    void OnCollisionEnter(Collision collision) {
+        Debug.Log("[Laser] Collision enter confirmed.");
+        if((collision.gameObject.tag == "Enemy") || (collision.gameObject.tag == "Stage")) {
+            PlaceShotHitFX();
+            laser_isExtend = false;
+        }
+    }
+
+    void OnCollisionExit(Collision collision) {
+        Debug.Log("[Laser] Collision exit confirmed.");
+        if((collision.gameObject.tag == "Enemy") || (collision.gameObject.tag == "Stage")) {
+            Debug.Log("[Laser] Collision exit confirmed.");
+            PlaceShotHitFX();
+            laser_isExtend = true;
+        }
+    }
+
+    void OnCollisionStay(Collision collision) {
+        Debug.Log("[Laser] Collision stay confirmed.");
+        // If bullet collides with enemy or terrain
+        if((collision.gameObject.tag == "Enemy") || (collision.gameObject.tag == "Stage")) {
+            PlaceShotHitFX();
+            laser_isExtend = false;
+        }
+    }
+    */
     
     public void FireLaser() {
+        //laser_isExtend = true;
+        //ray = new Ray(laserPivot.position + new Vector3(centerDifference,0,0), transform.right);
+
         spriteRenderer.size = new Vector2(startingLength, spriteRenderer.size.y);
         SetLaserEmitter();
         animator.SetTrigger("AttackStart");
         ToggleEmission(true);
-        laser_isExtend = true;
     }
 
     public void ResetLaser() {
@@ -114,7 +171,7 @@ public class LaserController : MonoBehaviour {
             if(shotHitPool.objects[i].activeInHierarchy == false) {
                 shotHitPool.objects[i].SetActive(true);
                 
-                shotHitPool.objects[i].transform.position = laserTip - new Vector3(centerDifference*2,0,0); // Manual adjustment to make impact effect line up with laser tip visual
+                shotHitPool.objects[i].transform.position = laserTip - new Vector3(centerDifference*3,0,0); // Manual adjustment to make impact effect line up with laser tip visual
                 shotHitPool.objectAnimator[i].SetTrigger("ShotHit");
                 break;
             }

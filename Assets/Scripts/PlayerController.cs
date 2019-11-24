@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 
             // Powerup Controls
             if(Input.GetButton("Fire2")) {
-                Debug.Log("Fire2 pressed. Power Meter = " + powerMeterController.currentLitMeter);
+                //Debug.Log("Fire2 pressed. Power Meter = " + powerMeterController.currentLitMeter);
                 switch(powerMeterController.currentLitMeter) {
                     case 0:         // Speed Up
                         PowerUpFX_0_SpeedUp();
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour {
                         break;
                         
                     case 2:         // Laser
-                        attack_isLaser = true;
+                        PowerUpFX_2_Laser();
                         break;
                         
                     case 3:         // Charge
@@ -240,10 +240,19 @@ public class PlayerController : MonoBehaviour {
         //Debug.Log(rigidbody.velocity.y * tiltLimit);
     }
 
-    void PowerUpFX_0_SpeedUp() {
+    // Enable Speed Up
+    public void PowerUpFX_0_SpeedUp() {
         powerUpFX_0_speedUp_thruster.gameObject.SetActive(true);
         powerUpFX_0_speedUp_thruster.SetTrigger("RestartFX");
         speedUp_boost += 1.0f;
+    }
+
+    // Enable Laser attack ability
+    public void PowerUpFX_2_Laser() {
+        // Adding potential increment potential for tiered laser attack system
+        //if(!attack_isLaser) {
+        attack_isLaser = true;
+        //}
     }
 
     // If player is destroyed by enemy attack or enemy/stage collision

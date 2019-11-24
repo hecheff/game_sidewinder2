@@ -44,7 +44,8 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\Scripts\AttackController.cs" />
+  <ItemGroup>     <Compile Include="Assets\RayCast_Test.cs" />
+     <Compile Include="Assets\Scripts\AttackController.cs" />
      <Compile Include="Assets\Scripts\AutoDestroy.cs" />
      <Compile Include="Assets\Scripts\AutoScroll.cs" />
      <Compile Include="Assets\Scripts\DestroyGameObject.cs" />

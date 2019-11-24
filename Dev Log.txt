@@ -12,11 +12,6 @@ TO DO List (Pending)
 	[] Will need to add more Shots to the object pools (10 -> 40?)
 [] Implement other enemy spawn types
 
-[] Add visual effects to laser
-
-Laser Implement:
-	- Y axis always relative to player character
-	- 
 
 
 ---------------------------------------------------------------
@@ -24,13 +19,17 @@ Laser Implement:
 
 2019/11/24 (Sun)
 - Put all attack collections into prefab for easy extensibility
-- Fixed laser algorithm for stipping when hitting enemy object
+- Added RigidBody and locked XYZ on stage objects to allow laser to be stopped when firing
+	- Alternative: Apply RigidBody to laser instead?
+- Fixed laser algorithm for stopping when hitting enemy object
 	- Still need to fix collision detection approach
 	- Attack does not continue going forward when enemy destroyed using attack (when collider vanishes)
+	- POSSIBLE SOLUTION: Use Raycasting techniques
+
 - Tightend code to remove unused variables
 - Particle system added to laser attack
 	- May need visual tweaks later
-	
+
 
 [] Add Debug Menu?
 [] Implement touchscreen input method?

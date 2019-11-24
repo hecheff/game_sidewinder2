@@ -24,7 +24,7 @@ public class PowerMeterController : MonoBehaviour {
 
             // Get child object of each current power bar
             foreach(Transform textObject in child) {
-                Debug.Log(textObject.name);
+                //Debug.Log(textObject.name);
                 powerMeterText.Add(textObject.GetComponent<TextMeshProUGUI>());
             }
         }
