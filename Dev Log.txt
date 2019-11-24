@@ -7,29 +7,9 @@ Development Blog
 TO DO List (Pending)
 ------------------
 [] Establish Scene Manager (currently using individual C# files to handle each scene transition, should be a better way)
-[] Find method to implement Laser attack
 [] Implement Options
 	[] Will need to add more Shots to the object pools (10 -> 40?)
 [] Implement other enemy spawn types
-
-
-
----------------------------------------------------------------
-
-
-2019/11/24 (Sun)
-- Put all attack collections into prefab for easy extensibility
-- Added RigidBody and locked XYZ on stage objects to allow laser to be stopped when firing
-	- Alternative: Apply RigidBody to laser instead?
-- Fixed laser algorithm for stopping when hitting enemy object
-	- Still need to fix collision detection approach
-	- Attack does not continue going forward when enemy destroyed using attack (when collider vanishes)
-	- POSSIBLE SOLUTION: Use Raycasting techniques
-
-- Tightend code to remove unused variables
-- Particle system added to laser attack
-	- May need visual tweaks later
-
 
 [] Add Debug Menu?
 [] Implement touchscreen input method?
@@ -39,6 +19,31 @@ TO DO List (Pending)
 	[] Formation system: Follow
 	[] Action when player dies (throws itself in front, move to scrolling screen, etc.)
 	[] Player can pick them back up after respawning
+
+
+---------------------------------------------------------------
+
+
+2019/11/25 (Mon)
+- Laser physics now using Raycasting. Fixes all known issues using Triggers only
+	- Raycast relies on collider property instead of sprite length
+	- Method to implement directional attack mode?
+
+[] Implement floor-running missile type
+
+	
+2019/11/24 (Sun)
+- Put all attack collections into prefab for easy extensibility
+- Added RigidBody and locked XYZ on stage objects to allow laser to be stopped when firing
+	- Alternative: Apply RigidBody to laser instead?
+- Fixed laser algorithm for stopping when hitting enemy object
+	- Still need to fix collision detection approach
+	- Attack does not continue going forward when enemy destroyed using attack (when collider vanishes)
+	- POSSIBLE SOLUTION: Use Raycasting techniques
+		- Raycasting method successful
+- Tightend code to remove unused variables
+- Particle system added to laser attack
+	- May need visual tweaks later
 
 	
 2019/11/23 (Sat)

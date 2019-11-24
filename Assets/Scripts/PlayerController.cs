@@ -161,6 +161,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate() {
         if(canControl) {
+            //if(!Input.GetButton("Fire3")) { 
             float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + speedUp_boost);
             float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + speedUp_boost);
             
@@ -169,6 +170,7 @@ public class PlayerController : MonoBehaviour {
 
             SetObjectBoundary();
             MovementTilt();
+            //}
         }
     }
 
