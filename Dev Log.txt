@@ -21,8 +21,35 @@ TO DO List (Pending)
 
 ---------------------------------------------------------------
 
+TEMPALTE:
+2020/00/00 (DAY)
+Activity: 
+- 
+- 
+
+Thoughts: 
+[] 
+[] 
+
+
+
+
+
+
+2019/11/26 (Tue)
+Activity: 
+- Further refined laser physics and animation
+	- Now resets to shortest length when fired inside a collider (using hitbox of attack point)
+		- Still does not respond when using MeshCollider however (avoid using MeshCollider then?)
+
+Thoughts: 
+[] Avoid using MeshColliders for duration of this project, even if it means simplifying the stage types available
+[] Implement floor-running missile type?
+[] Implement touchscreen input method?
+
 
 2019/11/25 (Mon)
+Activity:
 - Laser physics now using Raycasting. Fixes all known issues using Triggers only
 	- Raycast relies on collider property instead of sprite length
 	- Method to implement directional attack mode?
@@ -31,11 +58,16 @@ TO DO List (Pending)
 - Stage slightly modified to test upcoming missile system
 - Updated power up gauge to include limits
 	- Text presentation to be implemented
+- Fixed laser hit effects (removed excess effect duration, disables when collider disabled)
+- Installed ProBuilder 2.x for developing stage elements
+	- Experimented with content builder. Pretty good though issue with meshcollider still present
+- Bug in laser attack fixed (raycast still touching target which prevents resetting if nearer target blocks the beam
+- Fixed bug in power meter highlight reset.
 
+Thoughts:
 [] Convert use of colliders to raycasting?
-	
-[] Implement floor-running missile type
-[] Implement touchscreen input method?
+[] RaycastAll very useful for identifying nearest targets on a given straight path
+	[] Particularly for persisting weapons like beams
 
 	
 2019/11/24 (Sun)

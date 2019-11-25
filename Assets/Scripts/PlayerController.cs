@@ -191,8 +191,7 @@ public class PlayerController : MonoBehaviour {
 
     // Force object to stay within set boundaries
     void SetObjectBoundary() {
-        rigidbody.position = new Vector3
-        (
+        rigidbody.position = new Vector3 (
             Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
             Mathf.Clamp(rigidbody.position.y, boundary.yMin, boundary.yMax),
             0.0f

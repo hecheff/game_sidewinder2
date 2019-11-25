@@ -67,9 +67,11 @@ public class PowerMeterController : MonoBehaviour {
     // If at least one power meter is lit, reset to beginning
     // Otherwise, reset to nothing (-1)
     public void ResetMeter_Die() {
+        Debug.Log("Power meter reset executed.");
         if(currentLitMeter > -1) {
             currentLitMeter = 0;
         }
+        UpdatePowerMeterLight();
     }
 
     // Update power meter light status according to currentLitMeter
@@ -83,7 +85,7 @@ public class PowerMeterController : MonoBehaviour {
             powerMeterText[currentLitMeter].color       = powerMeterTextColor_active;
         }
     }
-    
+
     // DEPRECATED METHOD: Too much manual setup. Replaced with automated generation of Lists for each relevant part instead of arrays.
     /*
     public Sprite meterTexture_inactive;
