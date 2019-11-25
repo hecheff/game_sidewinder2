@@ -31,6 +31,8 @@ TO DO List (Pending)
 - Stage slightly modified to test upcoming missile system
 - Updated power up gauge to include limits
 	- Text presentation to be implemented
+
+[] Convert use of colliders to raycasting?
 	
 [] Implement floor-running missile type
 [] Implement touchscreen input method?
