@@ -7,8 +7,6 @@ Development Blog
 TO DO List (Pending)
 ------------------
 [] Establish Scene Manager (currently using individual C# files to handle each scene transition, should be a better way)
-[] Implement Options
-	[] Will need to add more Shots to the object pools (10 -> 40?)
 [] Implement other enemy spawn types
 
 [] Add Debug Menu?
@@ -28,8 +26,14 @@ TO DO List (Pending)
 - Laser physics now using Raycasting. Fixes all known issues using Triggers only
 	- Raycast relies on collider property instead of sprite length
 	- Method to implement directional attack mode?
-
+- Increased shot impact pool (15 -> 20)
+- Converted power up booleans to tier-based (uses integers, 0 = nothing/disabled)
+- Stage slightly modified to test upcoming missile system
+- Updated power up gauge to include limits
+	- Text presentation to be implemented
+	
 [] Implement floor-running missile type
+[] Implement touchscreen input method?
 
 	
 2019/11/24 (Sun)

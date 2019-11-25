@@ -15,6 +15,15 @@ public class PowerMeterController : MonoBehaviour {
 
     public int currentLitMeter = -1;        // -1 = Nothing lit, 0 - 5 for each corresponding entry's index
 
+    // Max. limits of each power up. Make power up unselectable when maxed out
+    public int powerMax_0_speedUp       = 6;
+    public int powerMax_1_missile       = 2;
+    public int powerMax_2_attack_laser  = 2;
+    public int powerMax_3_attack_charge = 1;
+    public int powerMax_4_optionCount   = 2;    // Should be 4 or 6
+    public int powerMax_5_shield        = 1;    
+
+
     void Awake() {
         // Auto-set Power Up Items from Power Meter GameObject
         // SpriteRenderer for changing bar highlights
@@ -74,7 +83,7 @@ public class PowerMeterController : MonoBehaviour {
             powerMeterText[currentLitMeter].color       = powerMeterTextColor_active;
         }
     }
-
+    
     // DEPRECATED METHOD: Too much manual setup. Replaced with automated generation of Lists for each relevant part instead of arrays.
     /*
     public Sprite meterTexture_inactive;

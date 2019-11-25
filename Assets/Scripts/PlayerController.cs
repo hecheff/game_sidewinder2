@@ -40,10 +40,14 @@ public class PlayerController : MonoBehaviour {
 
     private float nextFire;
 
-    // Player temp stats
-    private bool    attack_isLaser  = false;
-    private float   speedUp_boost   = 0;
-    private int     optionCount     = 2;
+    // Player current stats based on power-ups used. Resets upon death.
+    // Uses integer-based tier system (0 = none)
+    public int currPow_0_speedUp        = 0;
+    public int currPow_1_missile        = 0;
+    public int currPow_2_attack_laser   = 0;
+    public int currPow_3_attack_charge  = 0;
+    public int currPow_4_optionCount    = 2;
+    public int currPow_5_shield         = 0;
 
     void Awake() { }
 
@@ -90,14 +94,13 @@ public class PlayerController : MonoBehaviour {
             // Attack Controls
             // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
             if (Input.GetButton("Fire1")) {
-                if(!attack_isLaser) {
+                if(currPow_2_attack_laser == 0) {
                     if(Time.time > nextFire) {
-                        Debug.Log("Fire1 pressed");
                         attackController.FireWeapon(0);
                         nextFire = Time.time + rateOfFire;
 
                         // Fire attacks from Options
-                        for(int i = 0; i < optionCount; i++) {
+                        for(int i = 0; i < currPow_4_optionCount; i++) {
                             options[i].attackController.FireWeapon(0);
                         }
                     }
@@ -107,7 +110,7 @@ public class PlayerController : MonoBehaviour {
                         attackController.FireWeapon(1);
                         
                         // Fire attacks from Options
-                        for(int i = 0; i < optionCount; i++) {
+                        for(int i = 0; i < currPow_4_optionCount; i++) {
                             options[i].attackController.FireWeapon(1);
                         }
                     }
@@ -116,17 +119,20 @@ public class PlayerController : MonoBehaviour {
 
             // Powerup Controls
             if(Input.GetButton("Fire2")) {
+                bool powerUp_isUsed = false;
+
                 //Debug.Log("Fire2 pressed. Power Meter = " + powerMeterController.currentLitMeter);
                 switch(powerMeterController.currentLitMeter) {
                     case 0:         // Speed Up
-                        PowerUpFX_0_SpeedUp();
+                        powerUp_isUsed = PowerUpFX_0_SpeedUp();
                         break;
                         
                     case 1:         // Missile
+                        powerUp_isUsed = PowerUpFX_1_Missile();
                         break;
                         
                     case 2:         // Laser
-                        PowerUpFX_2_Laser();
+                        powerUp_isUsed = PowerUpFX_2_Laser();
                         break;
                         
                     case 3:         // Charge
@@ -143,8 +149,8 @@ public class PlayerController : MonoBehaviour {
                         break;
                 }
 
-                // Reset power meter if power up used (when button pressed when not empty)
-                if(powerMeterController.currentLitMeter != -1) {
+                // Reset power meter if power up used (only when button pressed when not empty and not over maxed power up)
+                if(powerMeterController.currentLitMeter != -1 && powerUp_isUsed == true) {
                     powerUpFX_RippleFX.gameObject.SetActive(true);
                     powerUpFX_RippleFX.SetTrigger("RestartFX");
                     powerMeterController.ResetMeter();
@@ -162,8 +168,8 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate() {
         if(canControl) {
             //if(!Input.GetButton("Fire3")) { 
-            float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + speedUp_boost);
-            float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + speedUp_boost);
+            float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + currPow_0_speedUp);
+            float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + currPow_0_speedUp);
             
             Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
             rigidbody.velocity = movement;
@@ -243,18 +249,32 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Enable Speed Up
-    public void PowerUpFX_0_SpeedUp() {
-        powerUpFX_0_speedUp_thruster.gameObject.SetActive(true);
-        powerUpFX_0_speedUp_thruster.SetTrigger("RestartFX");
-        speedUp_boost += 1.0f;
+    public bool PowerUpFX_0_SpeedUp() {
+        if(currPow_0_speedUp < powerMeterController.powerMax_0_speedUp) {
+            powerUpFX_0_speedUp_thruster.gameObject.SetActive(true);
+            powerUpFX_0_speedUp_thruster.SetTrigger("RestartFX");
+            currPow_0_speedUp++;
+            return true;
+        }
+        return false;
     }
 
-    // Enable Laser attack ability
-    public void PowerUpFX_2_Laser() {
-        // Adding potential increment potential for tiered laser attack system
-        //if(!attack_isLaser) {
-        attack_isLaser = true;
-        //}
+    // Enable Missile attack
+    public bool PowerUpFX_1_Missile() {
+        if(currPow_1_missile < powerMeterController.powerMax_1_missile) {
+            currPow_1_missile++;
+            return true;
+        }
+        return false;
+    }
+
+    // Enable Laser attack (replaces basic shot)
+    public bool PowerUpFX_2_Laser() {
+        if(currPow_2_attack_laser < powerMeterController.powerMax_2_attack_laser) {
+            currPow_2_attack_laser++;
+            return true;
+        }
+        return false;
     }
 
     // If player is destroyed by enemy attack or enemy/stage collision
@@ -271,11 +291,11 @@ public class PlayerController : MonoBehaviour {
         animator.SetTrigger("Player_WasKilled");    // 
         
         // Cancel laser attack animation sequence
-        if(attack_isLaser) {
+        if(currPow_2_attack_laser >= 1) {
             attackController.ResetLaser();
 
             // Cancel for each active Option
-            for(int i = 0; i < optionCount; i++) {
+            for(int i = 0; i < currPow_4_optionCount; i++) {
                 options[i].attackController.ResetLaser();
             }
         }
@@ -290,11 +310,14 @@ public class PlayerController : MonoBehaviour {
     // Reset player active power ups
     // Throw any Options forward from player's death spot
     public void PlayerPowerReset() {
-        speedUp_boost = 0;                          // Speed boost to 0
-        attack_isLaser = false;                     // Laser attack status to false (revert to default attack)
-        powerMeterController.ResetMeter_Die();      // Reset power meter (as applicable)
-        
-        //optionCount = 0;                          // Reset Option count
+        currPow_0_speedUp           = 0;                // Speed boost to 0
+        currPow_1_missile           = 0;
+        currPow_2_attack_laser      = 0;                // Laser attack status to false (revert to default attack)
+        currPow_3_attack_charge     = 0;
+        currPow_4_optionCount       = 2;
+        currPow_5_shield            = 0;
+
+        powerMeterController.ResetMeter_Die();          // Reset power meter (as applicable)
     }
 
 
