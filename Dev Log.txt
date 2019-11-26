@@ -33,7 +33,14 @@ Thoughts:
 
 
 
+2019/11/27 (Wed)
+Activity: 
+[] Separate Shot and Laser attack properties, and have Damage value in its own script to be read by enemy
+- 
 
+Thoughts: 
+[] 
+[] 
 
 
 2019/11/26 (Tue)
@@ -41,6 +48,12 @@ Activity:
 - Further refined laser physics and animation
 	- Now resets to shortest length when fired inside a collider (using hitbox of attack point)
 		- Still does not respond when using MeshCollider however (avoid using MeshCollider then?)
+- Testing missile systems
+	- Needs own script for handling movement activity
+- Shot and Enemy coding updated for variable damage instead of constant 1 damage per hit
+	- Optimal Approach: Need to separate Shot, Laser, etc. attack types and have damage value a separate script property
+	- Still need to update refresh rate of damage taken instead of constant 1 damage value per frame
+	
 
 Thoughts: 
 [] Avoid using MeshColliders for duration of this project, even if it means simplifying the stage types available

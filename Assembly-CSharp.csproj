@@ -50,6 +50,7 @@
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
+     <Compile Include="Assets\Scenes\ShotSpawnController.cs" />
      <Compile Include="Assets\Scripts\_UNUSED\RayCast_Test.cs" />
      <Compile Include="Assets\Scripts\AttackController.cs" />
      <Compile Include="Assets\Scripts\AutoDestroy.cs" />
@@ -77,7 +78,6 @@
      <Compile Include="Assets\Scripts\ShotProperties.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\TitleTransistController.cs" />
-     <Compile Include="Assets\ShotSapwnController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -370,6 +370,21 @@
  <Reference Include="UnityEditor">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.13f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
  </Reference>
+ <Reference Include="ProBuilderCore-Unity5">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
+ </Reference>
+ <Reference Include="ProBuilderMeshOps-Unity5">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+ </Reference>
+ <Reference Include="KdTreeLib">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
+ </Reference>
+ <Reference Include="pb_Stl">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
+ </Reference>
+ <Reference Include="Poly2Tri">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>D:/Unity Projects/Sidewinder_2/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
@@ -384,21 +399,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>D:/Unity Projects/Sidewinder_2/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="Poly2Tri">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
- </Reference>
- <Reference Include="KdTreeLib">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
- </Reference>
- <Reference Include="pb_Stl">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderCore-Unity5">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderMeshOps-Unity5">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.13f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

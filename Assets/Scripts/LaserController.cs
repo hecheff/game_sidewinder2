@@ -5,7 +5,7 @@ using UnityEngine;
 // Laser weapon used by player character
 public class LaserController : MonoBehaviour {
     public Transform laserPivot;                        // Attack origin point (shot spawn source)
-    public ShotSapwnController laserPivot_controller;  // Controller script for shot spawn
+    private ShotSpawnController laserPivot_controller;  // Controller script for shot spawn (set upon start)
 
     public ParticleSystem laserParticleEmitter;         // Laser Particle effect emitter
 
@@ -59,7 +59,7 @@ public class LaserController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        laserPivot_controller = laserPivot.gameObject.GetComponent<ShotSapwnController>();
+        laserPivot_controller = laserPivot.gameObject.GetComponent<ShotSpawnController>();
 
 
         spriteRenderer.size = new Vector2(startingLength, spriteRenderer.size.y);
@@ -92,6 +92,7 @@ public class LaserController : MonoBehaviour {
         if(attack_isFiring) {
             CalculateReferenceValues();
             
+            // Update list of objects hit by raycast per frame
             hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
             
             // If laser attack source is currently not inside another collider, check raycast as normal

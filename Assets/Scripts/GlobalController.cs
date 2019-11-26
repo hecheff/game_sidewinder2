@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary; 
 using UnityEngine.SceneManagement;
 
-public enum Language { English = 0, Japanese = 1 };
+public enum Axis        { X,Y,Z }
+public enum Language    { English = 0, Japanese = 1 };
 public class GlobalController : MonoBehaviour {
     // Establishing instance of GlobalController makes it accessible everywhere else.
     public static GlobalController Instance;

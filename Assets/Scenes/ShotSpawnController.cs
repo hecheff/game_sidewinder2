@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotSapwnController : MonoBehaviour {
+public class ShotSpawnController : MonoBehaviour {
     public bool isInsideCollider = false;
 
     void OnTriggerEnter(Collider other) {

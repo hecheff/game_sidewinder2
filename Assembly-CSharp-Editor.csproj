@@ -334,6 +334,24 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.13f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="ProBuilderCore-Unity5">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
+ </Reference>
+ <Reference Include="ProBuilderMeshOps-Unity5">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+ </Reference>
+ <Reference Include="KdTreeLib">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
+ </Reference>
+ <Reference Include="pb_Stl">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
+ </Reference>
+ <Reference Include="Poly2Tri">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
+ </Reference>
+ <Reference Include="ProBuilderEditor-Unity5">
+ <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Editor/ProBuilderEditor-Unity5.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Unity Projects/Sidewinder_2/Library/PackageCache/com.unity.ads@2.3.1/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -354,24 +372,6 @@
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Unity Projects/Sidewinder_2/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderEditor-Unity5">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Editor/ProBuilderEditor-Unity5.dll</HintPath>
- </Reference>
- <Reference Include="Poly2Tri">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
- </Reference>
- <Reference Include="KdTreeLib">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
- </Reference>
- <Reference Include="pb_Stl">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderCore-Unity5">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderMeshOps-Unity5">
- <HintPath>D:/Unity Projects/Sidewinder_2/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>D:/Unity Projects/Sidewinder_2/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
