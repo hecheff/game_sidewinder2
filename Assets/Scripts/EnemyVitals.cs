@@ -28,7 +28,7 @@ public class EnemyVitals : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
-            TakeDamage(other.GetComponent<ShotProperties>().damage);
+            TakeDamage(other.GetComponent<ShotDamage>().attackDamage);
         }
     }
     
@@ -36,7 +36,7 @@ public class EnemyVitals : MonoBehaviour {
     void OnTriggerStay(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
-            TakeDamage(other.GetComponent<ShotProperties>().damage);
+            TakeDamage(other.GetComponent<ShotDamage>().attackDamage);
         }
     }
 

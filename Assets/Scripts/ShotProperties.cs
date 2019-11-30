@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ShotProperties : MonoBehaviour {    
     public float    shotSpeed           = 20.0f;    // Flight speed of shot
-    public int      damage              = 1;        // 
-    
-    public bool     returnsToShotPool   = false;    // Check if attack is reset to shot pool after hitting target
 
     // Rotation properties of projectile
     public Axis     rotationAxis        = Axis.X;
@@ -56,29 +53,23 @@ public class ShotProperties : MonoBehaviour {
     // Checks if bullet leaves Boundary
     void OnTriggerExit(Collider other) {
         if(other.CompareTag("Boundary")) {
-            if(returnsToShotPool) {
-                ReturnToShotPool();
-            }
+            ReturnToShotPool();
         }
     }
 
     void OnTriggerEnter(Collider other) {
         // If bullet collides with enemy or terrain
         if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            if(returnsToShotPool) {
-                PlaceShotHitFX();
-                ReturnToShotPool();
-            }
+            PlaceShotHitFX();
+            ReturnToShotPool();
         }
     }
 
     void OnTriggerStay(Collider other) {
         // If bullet is within enemy or terrain
         if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            if(returnsToShotPool) {
-                PlaceShotHitFX();
-                ReturnToShotPool();
-            }
+            PlaceShotHitFX();
+            ReturnToShotPool();
         }
     }
 

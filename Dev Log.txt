@@ -36,14 +36,14 @@ Thoughts:
 2019/11/30 (Sat)
 Activity: 
 - Updated to Unity version 2019.2.14f1
-- 
-[] Separate Shot and Laser attack properties, and have Damage value in its own script to be read by enemy
-[] 
-- 
+- Separated Shot and Laser attack properties, and have Damage value in its own script to be read by enemy (as ShotDamage.cs) 
+- Fixed laser animation reset (return to default position on standby)
+- Experiment with mesh colliders broken down by stage component to allow individual convex mesh colliders for each
+	- So far successful, but need to get it to work with Laser (problem as meshcollider isn't solid)
 
 Thoughts: 
-[] 
-[] 
+[] Mesh collider has limits, but is best approach
+[] 2D collider mix cannot work with current method as hitboxes and colliders do not align perfectly with 3D space
 
 
 2019/11/27 (Wed)
