@@ -33,14 +33,22 @@ Thoughts:
 
 
 
-2019/11/27 (Wed)
+2019/11/30 (Sat)
 Activity: 
+- Updated to Unity version 2019.2.14f1
+- 
 [] Separate Shot and Laser attack properties, and have Damage value in its own script to be read by enemy
+[] 
 - 
 
 Thoughts: 
 [] 
 [] 
+
+
+2019/11/27 (Wed)
+Thoughts: 
+[] Change to 2D colliders & triggers?
 
 
 2019/11/26 (Tue)
