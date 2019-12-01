@@ -8,8 +8,11 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary; 
 using UnityEngine.SceneManagement;
 
-public enum Axis        { X,Y,Z }
-public enum Language    { English = 0, Japanese = 1 };
+public enum Axis        { X,Y,Z }                           // Axis settings for individual object controls
+public enum Language    { English = 0, Japanese = 1 };      // Language settings reflected across entire game
+
+public enum OptionPattern { Follow, Formation, Rotate,  }   // Option formation type
+
 public class GlobalController : MonoBehaviour {
     // Establishing instance of GlobalController makes it accessible everywhere else.
     public static GlobalController Instance;

@@ -13,10 +13,8 @@ TO DO List (Pending)
 [] Implement touchscreen input method?
 
 [] Fix Attack Drone functions
-	[] Spawn based on power up status
-	[] Formation system: Follow
 	[] Action when player dies (throws itself in front, move to scrolling screen, etc.)
-	[] Player can pick them back up after respawning
+		[] Player can pick them back up after respawning
 
 
 ---------------------------------------------------------------
@@ -32,6 +30,7 @@ Thoughts:
 [] 
 
 
+
 2019/12/01 (Sun)
 Activity: 
 - SOLUTIION FOUND for meshcollider issue. 
@@ -42,10 +41,19 @@ Activity:
 - Adjusted shot origins of Options
 - Shot firing effects added (recycled from shot impact effects)
 	- May need to adjust a little
+- Moved Option movement control to PlayerController to centralize controls (nstead of individual by option bit)
+	- Established formation types as enum
+- Added new pattern: Follow (a.k.a. Classic Gradius option type)
+- Increased max active Options to 6
+	- Have 4 as maximum persistent amount, with 6 as Limit Break?
+- Increased Shot Hit Pool (20 to 40)
 
 Thoughts: 
 [] Need to do performance benchmark test with dual colliders due to potential resource consumption
-[] 
+[] Minor issue with populating more Options
+	[] Requires a lot of manual setup across multiple objects located in different layers and foreground/background
+	[] Method of automation possible, or just keep manual approach due to known upper limit?
+
 
 
 2019/11/30 (Sat)

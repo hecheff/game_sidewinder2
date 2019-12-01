@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class OptionController : MonoBehaviour {
-    public Transform        optionPivot;
     public Vector3          positionFromPivot;
     public AttackController attackController;
-    
+
     public Transform        shotSpawn;
     public ObjectPool       shotPool_shots;
 
@@ -14,9 +15,20 @@ public class OptionController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        /*
         if(followPlayer) {
-            transform.position = optionPivot.position + positionFromPivot;
+            switch(currentOptionPattern) {
+                case OptionPattern.Formation:
+                    transform.position = optionPivot.position + positionFromPivot;
+                    break;
+                
+                case OptionPattern.Follow:
+                default:
+                    for()
+                    break;
+            }
         }
+        */
     }
     
     /*

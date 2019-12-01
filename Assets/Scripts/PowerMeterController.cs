@@ -20,7 +20,7 @@ public class PowerMeterController : MonoBehaviour {
     public int powerMax_1_missile       = 2;
     public int powerMax_2_attack_laser  = 2;
     public int powerMax_3_attack_charge = 1;
-    public int powerMax_4_optionCount   = 2;    // Should be 4 or 6
+    public int powerMax_4_optionCount   = 6;    // Should be 4 or 6
     public int powerMax_5_shield        = 1;    
 
 
