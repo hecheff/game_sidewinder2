@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\DestroyGameObject.cs" />
      <Compile Include="Assets\Scripts\Enemy_Asteroid.cs" />
      <Compile Include="Assets\Scripts\EnemyVitals.cs" />
+     <Compile Include="Assets\Scripts\FollowTarget.cs" />
      <Compile Include="Assets\Scripts\FXController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GlobalController.cs" />
@@ -75,10 +76,10 @@
      <Compile Include="Assets\Scripts\ReturnToInitialPosition.cs" />
      <Compile Include="Assets\Scripts\RotateObject.cs" />
      <Compile Include="Assets\Scripts\SceneController_Bootup.cs" />
+     <Compile Include="Assets\Scripts\ShotDamage.cs" />
      <Compile Include="Assets\Scripts\ShotProperties.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\TitleTransistController.cs" />
-     <Compile Include="Assets\ShotDamage.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

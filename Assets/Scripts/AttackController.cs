@@ -8,6 +8,8 @@ public class AttackController : MonoBehaviour {
     
     public LaserController laserController;
     
+    public Animator shotAnimation;
+
     public void FireWeapon(int type) {
         GameObject currentShot;
         GameObject currentShotEffect;
@@ -29,6 +31,7 @@ public class AttackController : MonoBehaviour {
                     if(!currentShot.activeInHierarchy) {
                         currentShot.transform.position = shotOrigin.position;
                         currentShot.SetActive(true);
+                        SetFiringAnimation();
 
                         // Assign effect from effects pool to attack shot
                         // Foreach deprecated due to being slower than For loop in context of handling List contents
@@ -50,6 +53,12 @@ public class AttackController : MonoBehaviour {
         }
     }
     
+    // Set trigger to play firing animation
+    public void SetFiringAnimation() {
+        shotAnimation.gameObject.SetActive(true);
+        shotAnimation.SetTrigger("FireShot");
+    }
+
     // Resets animation sequence of laser.
     // Currently triggered upon player death.
     public void ResetLaser() {

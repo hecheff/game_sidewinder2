@@ -59,8 +59,7 @@ public class LaserController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        laserPivot_controller = laserPivot.gameObject.GetComponent<ShotSpawnController>();
-
+        laserPivot_controller   = laserPivot.gameObject.GetComponent<ShotSpawnController>();
 
         spriteRenderer.size = new Vector2(startingLength, spriteRenderer.size.y);
 
@@ -86,6 +85,22 @@ public class LaserController : MonoBehaviour {
 
     public RaycastHit[] hits;   // Registers all hits on raycast (uses RaycastAll due to object interception issue that prevents updating length)
 
+
+    public RaycastHit[] hits_depthCheck;  // Raycast to check if laser hits within a collider (using Z-axis check)
+
+    bool CheckIfInsideCollider() {
+        hits_depthCheck = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.forward, 1.0f);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(0,0,1.0f), Color.red);
+        if(hits_depthCheck.Length > 0) {
+            for(int i = 0; i < hits_depthCheck.Length; i++) {
+                if(hits_depthCheck[i].transform.gameObject.tag == "Enemy" || hits_depthCheck[i].transform.gameObject.tag == "Stage") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     void FixedUpdate() {
         // Actions to perform while attack is being fired (no action taken when attack)
         
@@ -97,7 +112,7 @@ public class LaserController : MonoBehaviour {
             
             // If laser attack source is currently not inside another collider, check raycast as normal
             // Otherwise, keep length of laser to minimum
-            if(!laserPivot_controller.isInsideCollider) {
+            if(!CheckIfInsideCollider()) {
                 if(hits.Length > 0) {
                     for(int i = 0; i < hits.Length; i++) {
                         if(hits[i].transform.gameObject.tag == "Enemy" || hits[i].transform.gameObject.tag == "Stage") {

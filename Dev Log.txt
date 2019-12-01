@@ -32,6 +32,21 @@ Thoughts:
 [] 
 
 
+2019/12/01 (Sun)
+Activity: 
+- SOLUTIION FOUND for meshcollider issue. 
+	- EXPERIMENTAL: Using dual colliders (both default and convex)
+		- Laser uses raycasting on Z-axis to check if hitting inside stage (responds to concave)
+		- Normal shots uses collider if hitting inside stage (responds to convex)
+- Adjusted Laser physics to fire against enemies & stage hazards/obstacles
+- Adjusted shot origins of Options
+- Shot firing effects added (recycled from shot impact effects)
+	- May need to adjust a little
+
+Thoughts: 
+[] Need to do performance benchmark test with dual colliders due to potential resource consumption
+[] 
+
 
 2019/11/30 (Sat)
 Activity: 
