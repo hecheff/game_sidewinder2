@@ -7,6 +7,7 @@ public class ShotProperties : MonoBehaviour {
 
     // Rotation properties of projectile
     public Axis     rotationAxis        = Axis.X;
+    public float    rotationAngle       = 0;        // Rotation of shot (counter-clockwise from right = 0 degrees)
 
     private Rigidbody rigidBody;             // Rigidbody for current shot fired. Only used for kinetic-fired weapons.
     private Transform shotPool_location;     // ShotPool object location (to allow expended shots to return)
@@ -21,34 +22,57 @@ public class ShotProperties : MonoBehaviour {
         shotHitPool = GameObject.Find("PlayerShotHit_Pool").GetComponent<ObjectPool>();
     }
 
-    // Start is called before the first frame update
+
     void Start() {
-        if(shotSpeed != 0) {
-            rigidBody.velocity = new Vector3(shotSpeed, 0.0f, 0.0f);
+        float velocity_x = 0.0f;
+        float velocity_y = 0.0f;
+
+        // If rotation is divisible by 90, apply method unique to those cases
+        // Otherwise, use calculated method
+        
+        if((rotationAngle%90 == 0)) {
+            if(rotationAngle == 0) {            // Fire forward
+                Debug.Log("Fire: Right");
+                velocity_x = shotSpeed;
+                velocity_y = 0.0f;
+            } else if(rotationAngle == -90) {   // Fire downward
+                Debug.Log("Fire: Down");
+                velocity_x = 0.0f;
+                velocity_y = -shotSpeed;
+            } else if(rotationAngle == 90) {    // Fire upward
+                Debug.Log("Fire: Up");
+                velocity_x = 0.0f;
+                velocity_y = shotSpeed;
+            } else if(rotationAngle == 180) {   // Fire backward
+                Debug.Log("Fire: Back");
+                velocity_x = -shotSpeed;
+                velocity_y = 0.0f;
+            }
+        } else {
+            // Mathf.Sin and Mathf.Cos takes value in radians, so conversion from degrees to radians is required to get desired acceleration values
+            velocity_x = shotSpeed * Mathf.Cos(rotationAngle * Mathf.PI/180);
+            velocity_y = shotSpeed * Mathf.Sin(rotationAngle * Mathf.PI/180);
         }
-    }
-
-    void Update() {
-        /*
-        if(rotationRightLimit != 0) {
-            if(transform.rotation.z < rotationRightLimit) {
-                switch(rotationAxis) {
-                    case Axis.X:
-                        transform.Rotate (new Vector3 (rotationRightSpeed, 0, 0) * Time.deltaTime);
-                        break;
-
-                    case Axis.Y:
-                        transform.Rotate (new Vector3 (0, rotationRightSpeed, 0) * Time.deltaTime);
-                        break;
-
-                    case Axis.Z:
-                        transform.Rotate (new Vector3 (0, 0, rotationRightSpeed) * Time.deltaTime);
-                        break;
-                }
+        rigidBody.velocity = new Vector3(velocity_x, velocity_y, 0.0f);
+        
+        // Set rotation of object
+        if(rotationAngle != 0) {
+            switch(rotationAxis) {
+                case Axis.X:
+                    transform.Rotate (new Vector3 (rotationAngle, 0, 0));
+                    break;
+                case Axis.Y:
+                    transform.Rotate (new Vector3 (0, rotationAngle, 0));
+                    break;
+                case Axis.Z:
+                default:
+                    transform.Rotate (new Vector3 (0, 0, rotationAngle));
+                    break;
             }
         }
-        */
     }
+
+    void Update() { }
 
     // Checks if bullet leaves Boundary
     void OnTriggerExit(Collider other) {

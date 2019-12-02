@@ -31,6 +31,16 @@ Thoughts:
 
 
 
+2019/12/02 (Mon)
+Activity: 
+- 
+- 
+
+Thoughts: 
+[] 
+[] 
+
+
 2019/12/01 (Sun)
 Activity: 
 - SOLUTIION FOUND for meshcollider issue. 
@@ -50,10 +60,9 @@ Activity:
 
 Thoughts: 
 [] Need to do performance benchmark test with dual colliders due to potential resource consumption
-[] Minor issue with populating more Options
+[] Some inconvenience with populating more Options
 	[] Requires a lot of manual setup across multiple objects located in different layers and foreground/background
 	[] Method of automation possible, or just keep manual approach due to known upper limit?
-
 
 
 2019/11/30 (Sat)
