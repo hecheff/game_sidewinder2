@@ -30,15 +30,22 @@ Thoughts:
 [] 
 
 
-
-2019/12/02 (Mon)
+2019/12/04 (Wed)
 Activity: 
-- 
-- 
+[] Developing attack collection override for easier control over attributes
+[] Create missile mockup (method for creating explosion effect/AOE TBD)
 
 Thoughts: 
 [] 
 [] 
+
+
+2019/12/02 (Mon)
+Activity: 
+- Angled firing attributes (by math) added for basic shot
+	- Allows implementation of directional shot in future
+- Adjusted spawn/firing pivot for basic shot and missile (to allow more natural presentation of basic shot)
+- Adjusted hitbox of shot bolt
 
 
 2019/12/01 (Sun)

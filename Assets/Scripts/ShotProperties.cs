@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShotProperties : MonoBehaviour {    
+    public bool updateOverride = false;
+
     public float    shotSpeed           = 20.0f;    // Flight speed of shot
 
     // Rotation properties of projectile
@@ -24,12 +26,45 @@ public class ShotProperties : MonoBehaviour {
 
 
     void Start() {
+        SetShotValues();
+    }
+
+    void LateUpdate() { 
+        if(updateOverride) {
+            SetShotValues();
+            updateOverride = false;
+        }
+    }
+    
+    // Checks if bullet leaves Boundary
+    void OnTriggerExit(Collider other) {
+        if(other.CompareTag("Boundary")) {
+            ReturnToShotPool();
+        }
+    }
+
+    void OnTriggerEnter(Collider other) {
+        // If bullet collides with enemy or terrain
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+            PlaceShotHitFX();
+            ReturnToShotPool();
+        }
+    }
+
+    void OnTriggerStay(Collider other) {
+        // If bullet is within enemy or terrain
+        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
+            PlaceShotHitFX();
+            ReturnToShotPool();
+        }
+    }
+    
+    void SetShotValues() {
         float velocity_x = 0.0f;
         float velocity_y = 0.0f;
 
         // If rotation is divisible by 90, apply method unique to those cases
         // Otherwise, use calculated method
-        
         if((rotationAngle%90 == 0)) {
             if(rotationAngle == 0) {            // Fire forward
                 Debug.Log("Fire: Right");
@@ -56,6 +91,7 @@ public class ShotProperties : MonoBehaviour {
         rigidBody.velocity = new Vector3(velocity_x, velocity_y, 0.0f);
         
         // Set rotation of object
+        transform.rotation = Quaternion.identity;   // Reset rotation to default (0,0,0)
         if(rotationAngle != 0) {
             switch(rotationAxis) {
                 case Axis.X:
@@ -72,30 +108,6 @@ public class ShotProperties : MonoBehaviour {
         }
     }
 
-    void Update() { }
-
-    // Checks if bullet leaves Boundary
-    void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Boundary")) {
-            ReturnToShotPool();
-        }
-    }
-
-    void OnTriggerEnter(Collider other) {
-        // If bullet collides with enemy or terrain
-        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            PlaceShotHitFX();
-            ReturnToShotPool();
-        }
-    }
-
-    void OnTriggerStay(Collider other) {
-        // If bullet is within enemy or terrain
-        if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            PlaceShotHitFX();
-            ReturnToShotPool();
-        }
-    }
 
     // If called, disable and return to ShotPool
     // Only intended to be called if attack does not persist on screen after hitting target (e.g. lasers or special weapons)
