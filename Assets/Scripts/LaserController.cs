@@ -11,8 +11,10 @@ public class LaserController : MonoBehaviour {
 
     public float startingLength = 1.0f;
     
-    public float laserSpeed = 18.0f;
-    public float firingDuration = 1.0f;     // Amount of time laser is fired from 
+    public float    laserSpeed      = 18.0f;
+    public float    firingDuration  = 1.0f;             // Amount of time laser is fired from 
+    public Axis     rotationAxis    = Axis.Z;
+    public float    rotationAngle   = 0.0f;
 
     public  ObjectPool      shotHitPool;
 
@@ -101,6 +103,8 @@ public class LaserController : MonoBehaviour {
         return false;
     }
 
+    public Vector3 raycast_direction;
+
     void FixedUpdate() {
         // Actions to perform while attack is being fired (no action taken when attack)
         
@@ -108,7 +112,8 @@ public class LaserController : MonoBehaviour {
             CalculateReferenceValues();
             
             // Update list of objects hit by raycast per frame
-            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
+            raycast_direction = new Vector3(1.0f, 0.0f, 0.0f);
+            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), raycast_direction, capsuleCollider.height);
             
             // If laser attack source is currently not inside another collider, check raycast as normal
             // Otherwise, keep length of laser to minimum
@@ -131,7 +136,8 @@ public class LaserController : MonoBehaviour {
             }
             capsuleCollider.center = laserCenter;
             spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
-            
+
+            Debug.DrawLine(transform.position, transform.position + raycast_direction * capsuleCollider.height, Color.red);
             
             // DEPRECATED METHOD 4
             // Beam stops when fired from inside a collider, but inside collider priority should be highest
@@ -313,13 +319,22 @@ public class LaserController : MonoBehaviour {
         ToggleEmission(false);
     }
 
+    // [WIP] Update speed and angle of shot fired
+    void SetLaserValues() {
+        
+    }
+    
     // Set animation of shot hit effect
     void PlaceShotHitFX() {
         for(int i = 0; i < shotHitPool.objects.Count; i++) {
             if(shotHitPool.objects[i].activeInHierarchy == false) {
+                var impactCoordinates = laserTip - new Vector3(centerDifference*3,0,0);
+
                 shotHitPool.objects[i].SetActive(true);
+                shotHitPool.objects[i].transform.position = impactCoordinates; // Manual adjustment to make impact effect line up with laser tip visual
                 
-                shotHitPool.objects[i].transform.position = laserTip - new Vector3(centerDifference*3,0,0); // Manual adjustment to make impact effect line up with laser tip visual
+                shotHitPool.SetAngleOfEffect(i, Axis.Z, shotHitPool.objects[i].transform); // Set tilt angle of impact effect based on angle of bullet fired
+                
                 shotHitPool.objectAnimator[i].SetTrigger("ShotHit");
                 break;
             }

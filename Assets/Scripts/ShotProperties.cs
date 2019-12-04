@@ -67,19 +67,19 @@ public class ShotProperties : MonoBehaviour {
         // Otherwise, use calculated method
         if((rotationAngle%90 == 0)) {
             if(rotationAngle == 0) {            // Fire forward
-                Debug.Log("Fire: Right");
+                //Debug.Log("Fire: Right");
                 velocity_x = shotSpeed;
                 velocity_y = 0.0f;
             } else if(rotationAngle == -90) {   // Fire downward
-                Debug.Log("Fire: Down");
+                //Debug.Log("Fire: Down");
                 velocity_x = 0.0f;
                 velocity_y = -shotSpeed;
             } else if(rotationAngle == 90) {    // Fire upward
-                Debug.Log("Fire: Up");
+                //Debug.Log("Fire: Up");
                 velocity_x = 0.0f;
                 velocity_y = shotSpeed;
             } else if(rotationAngle == 180) {   // Fire backward
-                Debug.Log("Fire: Back");
+                //Debug.Log("Fire: Back");
                 velocity_x = -shotSpeed;
                 velocity_y = 0.0f;
             }
@@ -121,6 +121,7 @@ public class ShotProperties : MonoBehaviour {
         for(int i = 0; i < shotHitPool.objects.Count; i++) {
             if(shotHitPool.objects[i].activeInHierarchy == false) {
                 shotHitPool.objects[i].SetActive(true);
+                shotHitPool.SetAngleOfEffect(i, rotationAxis, transform); // Set tilt angle of impact effect based on angle of bullet fired
                 shotHitPool.objects[i].transform.position = gameObject.transform.position;
                 shotHitPool.objectAnimator[i].SetTrigger("ShotHit");
                 break;

@@ -20,4 +20,24 @@ public class ObjectPool : MonoBehaviour {
             } 
         }
     }
+
+    // Set angle of object on play
+    public void SetAngleOfEffect(int index, Axis currentAxis, Transform transformData) {
+        objects[index].transform.rotation = Quaternion.identity;   // Reset rotation to default (0,0,0)
+
+        switch(currentAxis) {
+            case Axis.X:
+                objects[index].transform.Rotate(new Vector3 (transformData.eulerAngles.x, 0, 0));
+                break;
+            case Axis.Y:
+                objects[index].transform.Rotate(new Vector3 (0, transformData.eulerAngles.y, 0));
+                break;
+            case Axis.Z:
+            default:
+                objects[index].transform.Rotate(new Vector3 (0, 0, transformData.eulerAngles.z));
+                Debug.Log("transformData.eulerAngles.z = " + transformData.eulerAngles.z);
+                break;
+        }
+        
+    }
 }
