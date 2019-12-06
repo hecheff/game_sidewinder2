@@ -23,7 +23,7 @@ public class LaserController : MonoBehaviour {
     private Animator        animator;
 
     // Static Values (only need to calculate at start)
-    private float centerDifference;             //  
+    private float centerDifference;             // 
     private Vector2 spriteRendererPivot;        // Sprite render pivot point (where beam originates rom)
 
     // Constantly changing values calculated for references (e.g. particle effect calculations)
@@ -86,13 +86,12 @@ public class LaserController : MonoBehaviour {
     }
 
     public RaycastHit[] hits;   // Registers all hits on raycast (uses RaycastAll due to object interception issue that prevents updating length)
-
-
+    
     public RaycastHit[] hits_depthCheck;  // Raycast to check if laser hits within a collider (using Z-axis check)
 
     bool CheckIfInsideCollider() {
         hits_depthCheck = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.forward, 1.0f);
-        Debug.DrawLine(transform.position, transform.position + new Vector3(0,0,1.0f), Color.red);
+        //Debug.DrawLine(transform.position, transform.position + new Vector3(0,0,1.0f), Color.red);
         if(hits_depthCheck.Length > 0) {
             for(int i = 0; i < hits_depthCheck.Length; i++) {
                 if(hits_depthCheck[i].transform.gameObject.tag == "Enemy" || hits_depthCheck[i].transform.gameObject.tag == "Stage") {
@@ -107,12 +106,11 @@ public class LaserController : MonoBehaviour {
 
     void FixedUpdate() {
         // Actions to perform while attack is being fired (no action taken when attack)
-        
         if(attack_isFiring) {
             CalculateReferenceValues();
-            
+
             // Update list of objects hit by raycast per frame
-            raycast_direction = new Vector3(1.0f, 0.0f, 0.0f);
+            raycast_direction = transform.right;
             hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), raycast_direction, capsuleCollider.height);
             
             // If laser attack source is currently not inside another collider, check raycast as normal
@@ -134,117 +132,12 @@ public class LaserController : MonoBehaviour {
                 ResetLaserLength();
                 if(capsuleCollider.enabled) { PlaceShotHitFX(); }
             }
+            Debug.DrawLine(transform.position, transform.position + raycast_direction*capsuleCollider.height, Color.red);
+
             capsuleCollider.center = laserCenter;
             spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
 
-            Debug.DrawLine(transform.position, transform.position + raycast_direction * capsuleCollider.height, Color.red);
-            
-            // DEPRECATED METHOD 4
-            // Beam stops when fired from inside a collider, but inside collider priority should be highest
-            /*
-            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
-            if(hits.Length > 0) {
-                for(int i = 0; i < hits.Length; i++) {
-                    if(hits[i].transform.gameObject.tag == "Enemy" || hits[i].transform.gameObject.tag == "Stage") {
-                        capsuleCollider.height = hits[i].point.x - laserPivot.position.x;
-                        if(capsuleCollider.enabled) { PlaceShotHitFX(); }
-                        break;
-                    }
-                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-                }
-            } else {
-                // If firing point collider is inside another collider (enemy or stage), capsule length to initial
-                // Otherwise allow laser to continue to extend
-                if(laserPivot_controller.isInsideCollider) {
-                    ResetLaserLength();
-                    if(capsuleCollider.enabled) { PlaceShotHitFX(); }
-                } else {
-                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-                }
-            }
-            capsuleCollider.center = laserCenter;
-            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
-            */
-
-            // DEPRECATED METHOD 3
-            // Beam travels through objects if fired from inside a collider
-            /*
-            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
-            if(hits.Length > 0) {
-                for(int i = 0; i < hits.Length; i++) {
-                    if(hits[i].transform.gameObject.tag == "Enemy" || hits[i].transform.gameObject.tag == "Stage") {
-                        capsuleCollider.height = hits[i].point.x - laserPivot.position.x;
-                        if(capsuleCollider.enabled) { PlaceShotHitFX(); }
-                        break;
-                    }
-                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-                }
-            } else {
-                capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-            }
-            capsuleCollider.center = laserCenter;
-            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
-            */
-
-            // DEPRECATED METHOD 2
-            // Length of beam does not catch closest affected target if instant switched.
-            /*
-            ray = new Ray(laserPivot.position + new Vector3(centerDifference,0,0), transform.right);
-            if(
-                Physics.Raycast(ray, out hitInfo, capsuleCollider.height, mask_1, QueryTriggerInteraction.Collide) ||
-                Physics.Raycast(ray, out hitInfo, capsuleCollider.height, mask_2, QueryTriggerInteraction.Collide)
-            ) {
-                if(hitInfo.transform.gameObject.tag == "Enemy" || hitInfo.transform.gameObject.tag == "Stage") {
-                    // If raycast come into contact with target (enemy or stage element), set length to closest target
-                    capsuleCollider.height = hitInfo.point.x - laserPivot.position.x;
-                    if(capsuleCollider.enabled) { PlaceShotHitFX(); }
-                    Debug.Log("[" + gameObject.name + "] HIT");
-                } else {
-                    // Otherwise, continue to extend laser
-                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-                    Debug.Log("[" + gameObject.name + "] EXTEND");
-                }
-            } else {
-                // If raycast yields no results, continue to extend laser
-                capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
-                Debug.Log("[" + gameObject.name + "] NO CONTACT");
-            }
-            capsuleCollider.center = laserCenter;
-            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
-            */
-
-            // DEPRECATED METHOD 1
-            // Goes through everything, does not stop when hitting solid targets or stage
-            /*
-            if(Physics.Raycast(ray, out hitInfo, spriteRenderer.size.x)) {
-                if(hitInfo.transform.gameObject.tag == "Enemy" || hitInfo.transform.gameObject.tag == "Stage") {
-                    
-                    Vector2 target = new Vector3(hitInfo.transform.position.x, transform.position.y);
-                    Vector2 origin = new Vector3(transform.position.x, transform.position.y);
-
-                    spriteRenderer.size = target - origin;
-                    
-                    //currentLength = hitInfo.point.x - transform.position.x;
-                    Debug.DrawLine(transform.position, hitInfo.point, Color.green); 
-                } else {
-                    spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
-
-                    Debug.DrawLine(transform.position, transform.position + new Vector3(spriteRenderer.size.x,0,0), Color.red);
-                    //currentLength += laserSpeed;
-                }
-            } else {
-                spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
-                
-                Debug.DrawLine(transform.position, transform.position + new Vector3(spriteRenderer.size.x,0,0), Color.red);
-                //currentLength += laserSpeed;
-            }
-
-            // Adjust capsule collider according to length (height) of laser
-            capsuleCollider.center = laserCenter;
-            capsuleCollider.height = spriteRenderer.size.x - centerDifference*2;
-            */
-            // Set particle emitter to travel on tip of beam
-            SetLaserEmitter();
+            SetLaserEmitter();  // Set particle emitter to travel on tip of beam
         }
     }
 
@@ -358,4 +251,115 @@ public class LaserController : MonoBehaviour {
             laserParticleEmitter.Play();
         }
     }
+
+
+
+
+    // DEPRECATED
+    /*
+    void FixedUpdate() {
+        // DEPRECATED METHOD 4
+            // Beam stops when fired from inside a collider, but inside collider priority should be highest
+            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
+            if(hits.Length > 0) {
+                for(int i = 0; i < hits.Length; i++) {
+                    if(hits[i].transform.gameObject.tag == "Enemy" || hits[i].transform.gameObject.tag == "Stage") {
+                        capsuleCollider.height = hits[i].point.x - laserPivot.position.x;
+                        if(capsuleCollider.enabled) { PlaceShotHitFX(); }
+                        break;
+                    }
+                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+                }
+            } else {
+                // If firing point collider is inside another collider (enemy or stage), capsule length to initial
+                // Otherwise allow laser to continue to extend
+                if(laserPivot_controller.isInsideCollider) {
+                    ResetLaserLength();
+                    if(capsuleCollider.enabled) { PlaceShotHitFX(); }
+                } else {
+                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+                }
+            }
+            capsuleCollider.center = laserCenter;
+            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
+            */
+
+            // DEPRECATED METHOD 3
+            // Beam travels through objects if fired from inside a collider
+            /*
+            hits = Physics.RaycastAll(laserPivot.position + new Vector3(centerDifference,0,0), transform.right, capsuleCollider.height);
+            if(hits.Length > 0) {
+                for(int i = 0; i < hits.Length; i++) {
+                    if(hits[i].transform.gameObject.tag == "Enemy" || hits[i].transform.gameObject.tag == "Stage") {
+                        capsuleCollider.height = hits[i].point.x - laserPivot.position.x;
+                        if(capsuleCollider.enabled) { PlaceShotHitFX(); }
+                        break;
+                    }
+                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+                }
+            } else {
+                capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+            }
+            capsuleCollider.center = laserCenter;
+            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
+            */
+
+            // DEPRECATED METHOD 2
+            // Length of beam does not catch closest affected target if instant switched.
+            /*
+            ray = new Ray(laserPivot.position + new Vector3(centerDifference,0,0), transform.right);
+            if(
+                Physics.Raycast(ray, out hitInfo, capsuleCollider.height, mask_1, QueryTriggerInteraction.Collide) ||
+                Physics.Raycast(ray, out hitInfo, capsuleCollider.height, mask_2, QueryTriggerInteraction.Collide)
+            ) {
+                if(hitInfo.transform.gameObject.tag == "Enemy" || hitInfo.transform.gameObject.tag == "Stage") {
+                    // If raycast come into contact with target (enemy or stage element), set length to closest target
+                    capsuleCollider.height = hitInfo.point.x - laserPivot.position.x;
+                    if(capsuleCollider.enabled) { PlaceShotHitFX(); }
+                    Debug.Log("[" + gameObject.name + "] HIT");
+                } else {
+                    // Otherwise, continue to extend laser
+                    capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+                    Debug.Log("[" + gameObject.name + "] EXTEND");
+                }
+            } else {
+                // If raycast yields no results, continue to extend laser
+                capsuleCollider.height = capsuleCollider.height + laserSpeed/GlobalController.Instance.targetFrameRate;
+                Debug.Log("[" + gameObject.name + "] NO CONTACT");
+            }
+            capsuleCollider.center = laserCenter;
+            spriteRenderer.size = new Vector2(capsuleCollider.height + centerDifference*2, spriteRenderer.size.y);
+            */
+
+            // DEPRECATED METHOD 1
+            // Goes through everything, does not stop when hitting solid targets or stage
+            /*
+            if(Physics.Raycast(ray, out hitInfo, spriteRenderer.size.x)) {
+                if(hitInfo.transform.gameObject.tag == "Enemy" || hitInfo.transform.gameObject.tag == "Stage") {
+                    
+                    Vector2 target = new Vector3(hitInfo.transform.position.x, transform.position.y);
+                    Vector2 origin = new Vector3(transform.position.x, transform.position.y);
+
+                    spriteRenderer.size = target - origin;
+                    
+                    //currentLength = hitInfo.point.x - transform.position.x;
+                    Debug.DrawLine(transform.position, hitInfo.point, Color.green); 
+                } else {
+                    spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
+
+                    Debug.DrawLine(transform.position, transform.position + new Vector3(spriteRenderer.size.x,0,0), Color.red);
+                    //currentLength += laserSpeed;
+                }
+            } else {
+                spriteRenderer.size = new Vector2(spriteRenderer.size.x + laserSpeed/GlobalController.Instance.targetFrameRate, spriteRenderer.size.y);
+                
+                Debug.DrawLine(transform.position, transform.position + new Vector3(spriteRenderer.size.x,0,0), Color.red);
+                //currentLength += laserSpeed;
+            }
+
+            // Adjust capsule collider according to length (height) of laser
+            capsuleCollider.center = laserCenter;
+            capsuleCollider.height = spriteRenderer.size.x - centerDifference*2;
+    }
+    */
 }

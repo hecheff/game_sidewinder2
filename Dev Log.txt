@@ -30,16 +30,25 @@ Thoughts:
 [] 
 
 
+2019/12/07 (Sat)
+Activity: 
+[] Create missile mockup (method for creating explosion effect/AOE TBD)
+[] Disable laser firing when button released?
+	- If laser is to allow consecutive firing of tiny shots, means a laser shot pool is needed. Can this be done?
+
+
+2019/12/06 (Fri)
+Activity: 
+- Updated to Unity version 2019.2.15f1
+- Updated option attack drone following code using pre-populated player coordinates history
+	- "Previous" positions based on player's current speed and frame rate
+
+
 2019/12/04 (Wed)
 Activity: 
 - Developed attack collection controller for easier control over attributes
 	- Also including a master controller/override for Player and Options
 - Added directional response to attack hit effects
-[] Create missile mockup (method for creating explosion effect/AOE TBD)
-
-Thoughts: 
-[] 
-[] 
 
 
 2019/12/02 (Mon)

@@ -8,7 +8,6 @@ public class Boundary {
     public float xMin, xMax, yMin, yMax;
 }
 
-
 public class PlayerController : MonoBehaviour {
     public bool canControl = true;  // Determine if player can control ship
 
@@ -99,12 +98,6 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         if(canControl) {
-            // Update option count of player upon spawning
-            if(updateOptionsOnSpawn) {
-                UpdateOptionActive(true);
-                updateOptionsOnSpawn = false;
-            }
-
             // Attack Controls
             // NEED TO UPDATE: Attack timing and type depends on current base attack (shot or laser)
             if (Input.GetButton("Fire1")) {
@@ -182,6 +175,15 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate() {
         if(canControl) {
+            // Update option count of player upon spawning
+            if(updateOptionsOnSpawn) {
+                InitializeCoordinatesHistory();
+                UpdateOptionActive(true);
+                UpdateOptions();
+
+                updateOptionsOnSpawn = false;
+            }
+
             //if(!Input.GetButton("Fire3")) { 
             float moveHorizontal = Input.GetAxis("Horizontal") * (moveSpeed + currPow_0_speedUp);
             float moveVertical = Input.GetAxis("Vertical") * (moveSpeed + currPow_0_speedUp);
@@ -202,6 +204,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Set initial values for coordinates history based on player spawn point and option's initial point
+    void InitializeCoordinatesHistory() {
+        // Calculate distance per frame based on current speed
+        float coordinateDifference = -(moveSpeed + currPow_0_speedUp)/GlobalController.Instance.targetFrameRate;
+        for(int i = 0; i < 300; i++) {
+            Vector3 newCoordinate = new Vector3(coordinateDifference * i, 0.0f, 0.0f);
+            coordinatesHistory.Add(newCoordinate);
+        }
+    }
+
     // Update coordinates history
     // Only intended to be executed when player moves
     void UpdateCoordinatesHistory() {
@@ -213,6 +225,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Update the position of Options
     void UpdateOptions() {
         switch(currentOptionPattern) {
             case OptionPattern.Formation:
@@ -230,10 +243,10 @@ public class PlayerController : MonoBehaviour {
                         if(coordinatesHistory[targetFrame] != null) {
                             options[i].transform.position = coordinatesHistory[targetFrame];
                         } else {
-                            options[i].transform.position = optionPivot.position;
+                            //options[i].transform.position = optionPivot.position;
                         }
                     } else {
-                        options[i].transform.position = optionPivot.position;
+                        //options[i].transform.position = optionPivot.position;
                     }
                 }
                 break;
@@ -352,9 +365,12 @@ public class PlayerController : MonoBehaviour {
     // Condition: Adding to Option Count (true), or Removing all (false) 
     void UpdateOptionActive(bool isEnable) {
         if(isEnable) {
+            Vector3 onSpawn_positionFromPlayer = new Vector3(-1.2f, 0, 0);
+            
             for(int i = 0; i < currPow_4_optionCount; i++) {
                 if(!options[i].gameObject.activeInHierarchy) {
                     options[i].gameObject.SetActive(true);
+                    //options[i].transform.position = transform.position + onSpawn_positionFromPlayer * (i+1);
                 }
             }
         } else {
