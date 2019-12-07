@@ -21,6 +21,9 @@ public class Attack_MasterController : MonoBehaviour {
     private Axis    ref_options_basicShot_rotationAxis;
     private float   ref_options_basicShot_rotationAngle;
 
+    //[Header("Missile Attacks")]
+    //public 
+
     void Start() {
         foreach (Transform child in transform) {
             attackCollectionOverride.Add(child.gameObject.GetComponent<AttackCollectionOverride>());

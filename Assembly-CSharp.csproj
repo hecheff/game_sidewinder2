@@ -45,7 +45,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Attack_MasterController.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\CameraControls.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\IcoBumpin.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Misc\HueCube.cs" />
@@ -53,10 +52,12 @@
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
      <Compile Include="Assets\Scripts\_UNUSED\RayCast_Test.cs" />
+     <Compile Include="Assets\Scripts\Attack_MasterController.cs" />
      <Compile Include="Assets\Scripts\AttackCollectionOverride.cs" />
      <Compile Include="Assets\Scripts\AttackController.cs" />
      <Compile Include="Assets\Scripts\AutoDestroy.cs" />
      <Compile Include="Assets\Scripts\AutoScroll.cs" />
+     <Compile Include="Assets\Scripts\DebugController.cs" />
      <Compile Include="Assets\Scripts\DestroyGameObject.cs" />
      <Compile Include="Assets\Scripts\Enemy_Asteroid.cs" />
      <Compile Include="Assets\Scripts\EnemyVitals.cs" />
@@ -67,6 +68,7 @@
      <Compile Include="Assets\Scripts\GoToTitle.cs" />
      <Compile Include="Assets\Scripts\LaserController.cs" />
      <Compile Include="Assets\Scripts\LaserParticleController.cs" />
+     <Compile Include="Assets\Scripts\MissileController.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\OptionController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

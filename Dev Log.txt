@@ -32,9 +32,18 @@ Thoughts:
 
 2019/12/07 (Sat)
 Activity: 
-[] Create missile mockup (method for creating explosion effect/AOE TBD)
+- Debug input established for CGP
+	- Scene Reset
+- Basic missile attack created
+	- Two patterns: Two-Way, Two-Way Backwards
+	- Effects not added yet
+- Power meter text now blanks/displays when power is maxed
+- Adjusted booster effects
+
+Thoughts:
 [] Disable laser firing when button released?
 	- If laser is to allow consecutive firing of tiny shots, means a laser shot pool is needed. Can this be done?
+	- Or don't do this and make it part of the Laser attack limitations (to give more incentive to normal shots?)
 
 
 2019/12/06 (Fri)

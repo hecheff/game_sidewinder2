@@ -18,12 +18,13 @@ public class EnemyVitals : MonoBehaviour {
 
     void Awake() {
         currHP = maxHP;     // Initialize current HP to be same as max
+        
+        // Establish mesh renderer defaults for reference when showing damage taking effects
         if(meshRenderer) {
            originalMaterial = meshRenderer.material;
            originalColor    = meshRenderer.material.color;
         }
     }
-    
     
     void OnTriggerEnter(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
@@ -31,8 +32,6 @@ public class EnemyVitals : MonoBehaviour {
             TakeDamage(other.GetComponent<ShotDamage>().attackDamage);
         }
     }
-    
-
     void OnTriggerStay(Collider other) {
         if(other.CompareTag("PlayerAttack")) {
             GameController.Instance.AnnotateScore(score_hit);
@@ -50,6 +49,7 @@ public class EnemyVitals : MonoBehaviour {
         }
     }
 
+    // Actions when taking damage
     void TakeDamage(int damage) {
         currHP -= damage;;
         if(meshRenderer) {
@@ -59,6 +59,7 @@ public class EnemyVitals : MonoBehaviour {
         }
     }
 
+    // Reset color after impact
     void ResetColor() {
         meshRenderer.material       = originalMaterial;
         meshRenderer.material.color = originalColor;

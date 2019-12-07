@@ -35,7 +35,7 @@ public class ObjectPool : MonoBehaviour {
             case Axis.Z:
             default:
                 objects[index].transform.Rotate(new Vector3 (0, 0, transformData.eulerAngles.z));
-                Debug.Log("transformData.eulerAngles.z = " + transformData.eulerAngles.z);
+                //Debug.Log("transformData.eulerAngles.z = " + transformData.eulerAngles.z);
                 break;
         }
         

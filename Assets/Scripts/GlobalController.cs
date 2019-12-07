@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public enum Axis        { X,Y,Z }                           // Axis settings for individual object controls
 public enum Language    { English = 0, Japanese = 1 };      // Language settings reflected across entire game
 
+public enum MissilePattern { TwoWay, TwoWay_Back, SpreadBomb,  }
 public enum OptionPattern { Follow, Formation, Rotate,  }   // Option formation type
 
 public class GlobalController : MonoBehaviour {

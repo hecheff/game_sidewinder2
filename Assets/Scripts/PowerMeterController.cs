@@ -7,8 +7,9 @@ public class PowerMeterController : MonoBehaviour {
     public Sprite meterTexture_inactive;
     public Sprite meterTexture_active;
 
-    public List<SpriteRenderer>     powerMeterSprites   = new List<SpriteRenderer>();       // List of all objects in pool
-    public List<TextMeshProUGUI>    powerMeterText      = new List<TextMeshProUGUI>();          // 
+    public List<SpriteRenderer>     powerMeterSprites   = new List<SpriteRenderer>();       // List of all power meter sprite renderer objects
+    public List<TextMeshProUGUI>    powerMeterText      = new List<TextMeshProUGUI>();      // List of text for each power meter entry
+    public List<string>             powerMeterText_ref  = new List<string>();               // Reference text for initial contents
 
     public Color32    powerMeterTextColor_inactive    =   new Color32(100,100,100,255);
     public Color32    powerMeterTextColor_active      =   new Color32(255,255,255,255);
@@ -22,6 +23,7 @@ public class PowerMeterController : MonoBehaviour {
     public int powerMax_3_attack_charge = 1;
     public int powerMax_4_optionCount   = 6;    // Should be 4 or 6
     public int powerMax_5_shield        = 1;    
+
 
 
     void Awake() {
@@ -46,6 +48,10 @@ public class PowerMeterController : MonoBehaviour {
         powerMeterText[3].text = "CHARGE";
         powerMeterText[4].text = "OPTION";
         powerMeterText[5].text = "SHIELD";
+
+        for(int i = 0; i < powerMeterText.Count; i++) {
+            powerMeterText_ref.Add(powerMeterText[i].text);
+        }
     }
 
     public void IncrementPowerMeter() {
@@ -72,6 +78,11 @@ public class PowerMeterController : MonoBehaviour {
             currentLitMeter = 0;
         }
         UpdatePowerMeterLight();
+
+        // Update power meter text contents (reset all since powers all resetted)
+        for(int i = 0; i < powerMeterSprites.Count; i++) {
+            UpdatePowerMeterText(i, 0);
+        }
     }
 
     // Update power meter light status according to currentLitMeter
@@ -85,6 +96,61 @@ public class PowerMeterController : MonoBehaviour {
             powerMeterText[currentLitMeter].color       = powerMeterTextColor_active;
         }
     }
+
+    // Update power meter text (index only) based its current level
+    public void UpdatePowerMeterText(int meterIndex, int currentLevel) {
+        bool blankOut_isMaxed = false;
+        
+        switch(meterIndex) {
+            case 0: 
+                if(currentLevel >= powerMax_0_speedUp) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+            case 1: 
+                if(currentLevel >= powerMax_1_missile) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+            case 2: 
+                if(currentLevel >= powerMax_2_attack_laser) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+            case 3: 
+                if(currentLevel >= powerMax_3_attack_charge) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+            case 4: 
+                if(currentLevel >= powerMax_4_optionCount) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+            case 5: 
+                if(currentLevel >= powerMax_5_shield) { 
+                    blankOut_isMaxed = true; 
+                }
+                break;
+        }
+
+        if(blankOut_isMaxed) { 
+            powerMeterText[meterIndex].text = "";
+        } else {
+            powerMeterText[meterIndex].text = powerMeterText_ref[meterIndex];
+        }
+
+        /*
+        powerMeterText[0].text = "SPEED UP";
+        powerMeterText[1].text = "MISSILE";
+        powerMeterText[2].text = "LASER";
+        powerMeterText[3].text = "CHARGE";
+        powerMeterText[4].text = "OPTION";
+        powerMeterText[5].text = "SHIELD";
+        */
+    }
+
+
 
     // DEPRECATED METHOD: Too much manual setup. Replaced with automated generation of Lists for each relevant part instead of arrays.
     /*

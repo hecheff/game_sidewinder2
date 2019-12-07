@@ -24,10 +24,11 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody    rigidbody;
     public Transform    shotSpawn;
     public Transform    optionPivot;
-    public ObjectPool   shotPool_shots;
 
     public Animator     powerUpFX_RippleFX;
     public Animator     powerUpFX_0_speedUp_thruster;
+
+    public MissilePattern       currentMissilePattern = MissilePattern.TwoWay;
 
     public OptionController[]   options;
     public OptionPattern        currentOptionPattern = OptionPattern.Follow;
@@ -106,7 +107,7 @@ public class PlayerController : MonoBehaviour {
                         attackController.FireWeapon(0);
                         nextFire = Time.time + rateOfFire;
 
-                        // Fire attacks from Options
+                        // Fire attacks from active Options
                         for(int i = 0; i < currPow_4_optionCount; i++) {
                             options[i].attackController.FireWeapon(0);
                         }
@@ -116,10 +117,20 @@ public class PlayerController : MonoBehaviour {
                     if(!attackController.laserController.attack_isFiring) {
                         attackController.FireWeapon(1);
                         
-                        // Fire attacks from Options
+                        // Fire attacks from active Options
                         for(int i = 0; i < currPow_4_optionCount; i++) {
                             options[i].attackController.FireWeapon(1);
                         }
+                    }
+                }
+
+                // Missile attack refresh rate is independent from main attack
+                if(currPow_1_missile != 0) {
+                    attackController.FireMissiles(currPow_1_missile);
+
+                    // Fire missiles from active Options
+                    for(int i = 0; i < currPow_4_optionCount; i++) {
+                        options[i].attackController.FireMissiles(currPow_1_missile);
                     }
                 }
             }
@@ -326,6 +337,7 @@ public class PlayerController : MonoBehaviour {
             powerUpFX_0_speedUp_thruster.gameObject.SetActive(true);
             powerUpFX_0_speedUp_thruster.SetTrigger("RestartFX");
             currPow_0_speedUp++;
+            powerMeterController.UpdatePowerMeterText(0, currPow_0_speedUp);
             return true;
         }
         return false;
@@ -335,6 +347,7 @@ public class PlayerController : MonoBehaviour {
     public bool PowerUpFX_1_Missile() {
         if(currPow_1_missile < powerMeterController.powerMax_1_missile) {
             currPow_1_missile++;
+            powerMeterController.UpdatePowerMeterText(1, currPow_1_missile);
             return true;
         }
         return false;
@@ -344,6 +357,7 @@ public class PlayerController : MonoBehaviour {
     public bool PowerUpFX_2_Laser() {
         if(currPow_2_attack_laser < powerMeterController.powerMax_2_attack_laser) {
             currPow_2_attack_laser++;
+            powerMeterController.UpdatePowerMeterText(2, currPow_2_attack_laser);
             return true;
         }
         return false;
@@ -352,6 +366,7 @@ public class PlayerController : MonoBehaviour {
     public bool PowerUpFX_4_Option() {
         if(currPow_4_optionCount < powerMeterController.powerMax_4_optionCount) {
             currPow_4_optionCount++;
+            powerMeterController.UpdatePowerMeterText(4, currPow_4_optionCount);
             
             // Set Option to active
             UpdateOptionActive(true);
