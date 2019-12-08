@@ -30,6 +30,15 @@ Thoughts:
 [] 
 
 
+2019/12/08 (Sun)
+Activity: 
+- Effects for basic missile attack added
+	- Timing of missile refresh set to after impact effect completed for gameplay balance 
+		- (to prevent spamming due to higher damage per shot)
+- Fixed thruster layer settings and positions
+- Minor changes to player explosion effect
+
+
 2019/12/07 (Sat)
 Activity: 
 - Debug input established for CGP
@@ -38,7 +47,7 @@ Activity:
 	- Two patterns: Two-Way, Two-Way Backwards
 	- Effects not added yet
 - Power meter text now blanks/displays when power is maxed
-- Adjusted booster effects
+- Adjusted thruster effects
 
 Thoughts:
 [] Disable laser firing when button released?

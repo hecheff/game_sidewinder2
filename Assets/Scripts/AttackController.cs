@@ -65,7 +65,7 @@ public class AttackController : MonoBehaviour {
         MissileController currentMissile_up     = missilePool.objects[0].GetComponent<MissileController>();
         MissileController currentMissile_down   = missilePool.objects[1].GetComponent<MissileController>();
 
-        if(!currentMissile_up.gameObject.activeInHierarchy) {
+        if(!currentMissile_up.gameObject.activeInHierarchy && Time.time >= currentMissile_up.fireAgainTiming) {
             currentMissile_up.missilePattern = missilePattern;
             currentMissile_up.shotSpeed = 5.0f * currLevel;
             currentMissile_up.rotationStartingAngle = 30;
@@ -75,7 +75,7 @@ public class AttackController : MonoBehaviour {
             currentMissile_up.gameObject.SetActive(true);
         }
 
-        if(!currentMissile_down.gameObject.activeInHierarchy) {
+        if(!currentMissile_down.gameObject.activeInHierarchy && Time.time >= currentMissile_down.fireAgainTiming) {
             currentMissile_down.missilePattern = missilePattern;
             currentMissile_down.shotSpeed = 5.0f * currLevel;
             currentMissile_down.rotationStartingAngle = -30;

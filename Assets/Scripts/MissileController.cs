@@ -16,8 +16,10 @@ public class MissileController : MonoBehaviour {
     public Transform    missileSpawnPoint;
     public Vector3      spawnPointDelta         = new Vector3(0.0f, 0.1f, 0.0f);
 
-    private Transform   missilePool_location;       // Missile Pool object location (to allow expended missiles to return)
-    private ObjectPool  missileHitPool;             // Missile hit pool (called immediately)
+    private Transform   missilePool_location;               // Missile Pool object location (to allow expended missiles to return)
+    private ObjectPool  missileHitPool_normal;             // Missile hit pool (called immediately)
+
+    public float        fireAgainTiming = 0.0f;             // Can fire shot again after time has passed
 
     // For two-way patterns
     public bool     twoWay_isUp = false;    
@@ -29,7 +31,7 @@ public class MissileController : MonoBehaviour {
         InitializeMissile();
         
         missilePool_location = transform.parent.transform;
-        //missileHitPool = GameObject.Find("PlayerMissileHit_Pool").GetComponent<ObjectPool>();
+        missileHitPool_normal = GameObject.Find("PlayerMissileHitNormal_Pool").GetComponent<ObjectPool>();
     }
 
     void Start() {
@@ -70,7 +72,7 @@ public class MissileController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         // If bullet collides with enemy or terrain
         if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            //PlaceShotHitFX();
+            PlaceMissileHitFX_Normal();
             ReturnToShotPool();
         }
     }
@@ -78,7 +80,7 @@ public class MissileController : MonoBehaviour {
     void OnTriggerStay(Collider other) {
         // If bullet is within enemy or terrain
         if(other.CompareTag("Enemy") || other.CompareTag("Stage")) {
-            //PlaceShotHitFX();
+            PlaceMissileHitFX_Normal();
             ReturnToShotPool();
         }
     }
@@ -117,6 +119,7 @@ public class MissileController : MonoBehaviour {
                 transform.position = missileSpawnPoint.position - spawnPointDelta;
             }
         }
+        fireAgainTiming = Time.time + 1.0f;
     }
 
     float OutputMirroredAngle(float inputAngle) {
@@ -197,10 +200,23 @@ public class MissileController : MonoBehaviour {
         return false;
     }
 
-    // If called, disable and return to ShotPool
-    // Only intended to be called if attack does not persist on screen after hitting target (e.g. lasers or special weapons)
+    // Set missile effect and bind current missile to the effect (to set disable trigger)
+    void PlaceMissileHitFX_Normal() {
+        for(int i = 0; i < missileHitPool_normal.objects.Count; i++) {
+            if(missileHitPool_normal.objects[i].activeInHierarchy == false) {
+                missileHitPool_normal.objects[i].GetComponent<MissileHitParticle_Controller>().ResetEffect(this);
+                missileHitPool_normal.objects[i].SetActive(true);
+                //missileHitPool_normal.SetAngleOfEffect(i, rotationAxis, transform); // Set tilt angle of impact effect based on angle of bullet fired
+                missileHitPool_normal.objects[i].transform.position = gameObject.transform.position;
+                //missileHitPool_normal.objectAnimator[i].SetTrigger("ShotHit");
+                break;
+            }
+        }
+    }
+
+    // If called, return to ShotPool
     void ReturnToShotPool() {
         gameObject.transform.position = missilePool_location.position;      // Send shot object back to where shot pool is located
-        gameObject.SetActive(false);                                        // Deactivate shot
+        gameObject.SetActive(false);                                      // Deactivate shot
     }
 }
