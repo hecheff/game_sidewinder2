@@ -18,8 +18,11 @@ public class PlayerController : MonoBehaviour {
 
     [Header("")]
     public Animator     animator;
+    
+    [Header("External Object Instances")]
     public GameObject   dieExplosion;
     
+    [Header("")]
     public Boundary     boundary;           // Moveable range boundary (not to be confused with boundary limits for everything else)
     public Rigidbody    rigidbody;
     public Transform    shotSpawn;
@@ -28,21 +31,21 @@ public class PlayerController : MonoBehaviour {
     public Animator     powerUpFX_RippleFX;
     public Animator     powerUpFX_0_speedUp_thruster;
 
-    public MissilePattern       currentMissilePattern = MissilePattern.TwoWay;
-
-    public OptionController[]   options;
-    public OptionPattern        currentOptionPattern = OptionPattern.Follow;
-
-    public List<Vector3> coordinatesHistory = new List<Vector3>();    //  Record of previous steps
-
-    // Returns response upon relevant hitbox interacted with
-    public PlayerHitbox_PowerUp     collider_powerUp;       // Response to collecting power-up on contact. Hitbox spans dimensions of visible ship.
-    public PlayerHitbox_Damage      collider_damage;        // Response when player takes damage. Small hitbox in critical area (cockpit).
-
+    [Header("General Control Variables")]
     public float    moveSpeed      = 5.0f;          // Max. Initial movement speed
     public float    rateOfFire     = 0.1f;          // Time interval between each shot
     //public float    fireCooldown   = 0.4f;          // 
     //public int      fireBurstCount = 5;             // 
+    public MissilePattern       currentMissilePattern = MissilePattern.TwoWay;
+    public OptionController[]   options;
+    public OptionPattern        currentOptionPattern = OptionPattern.Follow;
+    
+    public List<Vector3> coordinatesHistory = new List<Vector3>();    //  Record of previous steps
+
+    // Returns response upon relevant hitbox interacted with
+    [Header("Hitboxes")]
+    public PlayerHitbox_PowerUp     collider_powerUp;       // Response to collecting power-up on contact. Hitbox spans dimensions of visible ship.
+    public PlayerHitbox_Damage      collider_damage;        // Response when player takes damage. Small hitbox in critical area (cockpit).
 
     [Header("Conditional Flags")]
     private float nextFire;                         
@@ -264,15 +267,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    // Return result if currently inside boundary
-    // bool CheckObjectWithinBoundary()
-    // {
-    //     if ((rigidBody.position.x > boundary.xMin && rigidBody.position.x < boundary.xMax) && (rigidBody.position.y > boundary.yMin && rigidBody.position.y < boundary.yMax)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     // Force object to stay within set boundaries
     void SetObjectBoundary() {
         rigidbody.position = new Vector3 (
@@ -449,6 +443,17 @@ public class PlayerController : MonoBehaviour {
 
     // ======================================= DEPRECATED ITEMS =======================================
 
+    // [DEPRECATED] No longer needed.
+    // Return result if currently inside boundary
+    // bool CheckObjectWithinBoundary()
+    // {
+    //     if ((rigidBody.position.x > boundary.xMin && rigidBody.position.x < boundary.xMax) && (rigidBody.position.y > boundary.yMin && rigidBody.position.y < boundary.yMax)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+
     // [DEPRECATED] Shot system now part of AttackController (allows sharing of code for Options)
     // Fire basic attack shot
     /*
@@ -481,6 +486,7 @@ public class PlayerController : MonoBehaviour {
     }
     */
 
+    
     // [DEPRECATED] Cannot be applied due to difference in input value handling by input device (keyboard, gamepad, analog, etc.)
     // Set tilt action applied to object during vertical movement
     /* 

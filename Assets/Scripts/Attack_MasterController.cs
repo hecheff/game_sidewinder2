@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Attack_MasterController : MonoBehaviour {
+    [Header("Player Controller (To manually set missile specs overrides)")]
+    public PlayerController playerController;
+    
+    [Header("Player Collections")]
     public List<AttackCollectionOverride> attackCollectionOverride = new List<AttackCollectionOverride>();
 
     [Header("Player Attacks")]

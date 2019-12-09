@@ -201,3 +201,46 @@ public class PowerMeterController : MonoBehaviour {
     }
     */
 }
+
+// Contains all text variables for power ups
+// No idea if this would work
+public struct PowerUpText {
+    public string test;
+    
+    //string[] txt_0_0_speedup = new string[];
+
+    // SAMPLES: Power Up Text List
+    /*
+        00_0 - Speed Up
+        "SPEED UP", "INIT. SPEED"
+
+        01_0_0 - Missile
+        "MISSILE", "MISSILE II"
+        
+        01_1 - Two-Way Missile
+        "TWO-WAY", "TWO-WAY II"
+        
+        01_2 - Two-Way Reverse
+        "TWO-WAY R.", "TWO-WAY R. II"
+        
+
+        02_0 - Laser
+        "LASER", "LASER II"
+
+
+        03_0 - Charge
+
+
+        04_0 - Option
+        "OPTION"
+
+
+        05_0 - Force Shield
+        "F.SHIELD"
+
+        05_1 - Phase Out (Temporary invincibility)
+        "PHASEOUT"
+
+
+    */
+}
